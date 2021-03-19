@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PhotoGallery.DAL.interfaces;
 using PhotoGallery.WEB.Models;
 
 namespace PhotoGallery.WEB.Controllers
@@ -13,13 +14,21 @@ namespace PhotoGallery.WEB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IAllPhotoToGenreRepository _allPhotoToGenre;
+
+        private readonly IFiveLastPhotoToGenreRepository _fiveLastPhotoToGenre;
+        public HomeController(ILogger<HomeController> logger, IAllPhotoToGenreRepository allPhotoToGenreRepository, IFiveLastPhotoToGenreRepository fiveLastFhotoToGenreRepository)
         {
             _logger = logger;
+            _allPhotoToGenre = allPhotoToGenreRepository;
+            _fiveLastPhotoToGenre = fiveLastFhotoToGenreRepository;
         }
 
         public IActionResult Index()
         {
+            var item = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Forest").ToList();
+            ViewBag.Photo = item;
+
             return View();
         }
 

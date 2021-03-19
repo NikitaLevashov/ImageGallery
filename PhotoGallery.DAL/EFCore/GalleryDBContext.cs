@@ -17,7 +17,7 @@ namespace PhotoGallery.DAL.EFCore
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=photogallerydb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=itacademyphotogallerydb;Trusted_Connection=True;");
 
         }
 

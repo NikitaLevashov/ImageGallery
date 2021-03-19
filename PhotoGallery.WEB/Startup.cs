@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhotoGallery.DAL.EFCore;
+using PhotoGallery.DAL.interfaces;
+using PhotoGallery.DAL.Repository;
 
 namespace PhotoGallery.WEB
 {
@@ -26,6 +28,8 @@ namespace PhotoGallery.WEB
         {
             services.AddControllersWithViews();
             services.AddDbContext<GalleryDBContext>();
+            services.AddTransient<IAllPhotoToGenreRepository, PhotoRepository>();
+            services.AddTransient<IFiveLastPhotoToGenreRepository, PhotoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
