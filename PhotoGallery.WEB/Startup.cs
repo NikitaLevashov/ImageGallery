@@ -30,6 +30,7 @@ namespace PhotoGallery.WEB
             services.AddDbContext<GalleryDBContext>();
             services.AddTransient<IAllPhotoToGenreRepository, PhotoRepository>();
             services.AddTransient<IFiveLastPhotoToGenreRepository, PhotoRepository>();
+            services.AddTransient<IAllPhotoRepository, PhotoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,24 +12,25 @@ namespace PhotoGallery.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private readonly IAllPhotoToGenreRepository _allPhotoToGenre;
 
         private readonly IFiveLastPhotoToGenreRepository _fiveLastPhotoToGenre;
-        public HomeController(ILogger<HomeController> logger, IAllPhotoToGenreRepository allPhotoToGenreRepository, IFiveLastPhotoToGenreRepository fiveLastFhotoToGenreRepository)
+        public HomeController(IAllPhotoToGenreRepository allPhotoToGenreRepository, IFiveLastPhotoToGenreRepository fiveLastFhotoToGenreRepository)
         {
-            _logger = logger;
             _allPhotoToGenre = allPhotoToGenreRepository;
             _fiveLastPhotoToGenre = fiveLastFhotoToGenreRepository;
         }
 
         public IActionResult Index()
         {
-            var item = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Forest").ToList();
-            ViewBag.Photo = item;
+            var listPhotoToForest = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Forest").ToList();
+            var listPhotoToAnimal = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Animals").ToList();
+            var listPhotoToMountain = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Mountains").ToList();
+            var listPhotoToSpace = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Space").ToList();
 
-            return View();
+            var result = listPhotoToForest.Union(listPhotoToAnimal).Union(listPhotoToMountain).Union(listPhotoToSpace).ToList();
+
+            return View(result);
         }
 
         public IActionResult Privacy()

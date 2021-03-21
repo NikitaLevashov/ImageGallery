@@ -9,8 +9,19 @@ using System.Linq;
 
 namespace PhotoGallery.DAL.Repository
 {
-    public class PhotoRepository : IAllPhotoToGenreRepository, IFiveLastPhotoToGenreRepository
+    public class PhotoRepository : IAllPhotoToGenreRepository, IFiveLastPhotoToGenreRepository,IAllPhotoRepository
     {
+        public IEnumerable<PhotoDAL> GetAllPhoto()
+        {
+            using (GalleryDBContext db = new GalleryDBContext())
+            {
+                var allPhotos = db.Photos.ToList();
+
+                return allPhotos;
+                
+            }
+
+        }
         public IEnumerable<PhotoDAL> GetAllFotoToGenry(string genre)
         {
             using (GalleryDBContext db = new GalleryDBContext())
