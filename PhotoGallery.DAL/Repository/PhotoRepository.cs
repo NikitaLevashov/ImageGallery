@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace PhotoGallery.DAL.Repository
 {
-    public class PhotoRepository : IAllPhotoToGenreRepository, IFiveLastPhotoToGenreRepository,IAllPhotoRepository
+    public class PhotoRepository : IAllPhotoToGenreRepository, IFiveLastPhotoToGenreRepository, IAllPhotoRepository
     {
         public IEnumerable<PhotoDAL> GetAllPhoto()
         {

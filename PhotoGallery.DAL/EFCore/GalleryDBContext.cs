@@ -15,12 +15,12 @@ namespace PhotoGallery.DAL.EFCore
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
         }
+       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=itacademyphotogallerydb;Trusted_Connection=True;");
 
         }
 
-    
     }
 }
