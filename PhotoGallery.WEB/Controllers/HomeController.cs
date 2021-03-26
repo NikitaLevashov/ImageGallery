@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PhotoGallery.BLL.intrerfaces;
 using PhotoGallery.DAL.interfaces;
 using PhotoGallery.WEB.Models;
 
@@ -12,21 +13,18 @@ namespace PhotoGallery.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IAllPhotoToGenreRepository _allPhotoToGenre;
-
-        private readonly IFiveLastPhotoToGenreRepository _fiveLastPhotoToGenre;
-        public HomeController(IAllPhotoToGenreRepository allPhotoToGenreRepository, IFiveLastPhotoToGenreRepository fiveLastFhotoToGenreRepository)
+        private readonly IPhotoService _photoService;
+        public HomeController(IPhotoService  photoService)
         {
-            _allPhotoToGenre = allPhotoToGenreRepository;
-            _fiveLastPhotoToGenre = fiveLastFhotoToGenreRepository;
+            _photoService = photoService ?? throw new ArgumentNullException();
         }
 
         public IActionResult Index()
         {
-            var listPhotoToForest = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Forest").ToList();
-            var listPhotoToAnimal = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Animals").ToList();
-            var listPhotoToMountain = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Mountains").ToList();
-            var listPhotoToSpace = _fiveLastPhotoToGenre.GetFiveLastPhotoToGenre("Space").ToList();
+            var listPhotoToForest = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Forest").ToList());
+            var listPhotoToAnimal = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Animals").ToList());
+            var listPhotoToMountain = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Mountains").ToList());
+            var listPhotoToSpace = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Space").ToList());
 
             var result = listPhotoToForest.Union(listPhotoToAnimal).Union(listPhotoToMountain).Union(listPhotoToSpace).ToList();
 

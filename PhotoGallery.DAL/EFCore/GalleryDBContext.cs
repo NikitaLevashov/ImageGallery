@@ -10,16 +10,16 @@ namespace PhotoGallery.DAL.EFCore
     {
         public DbSet<PhotoDAL> Photos { get; set; }
         public DbSet<GenreDAL> Genres  { get; set; }
-        public GalleryDBContext()
-        {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
-        }
-       
+
+        //public GalleryDBContext(DbContextOptions<GalleryDBContext> options)
+        //: base(options)
+        //{
+
+        //}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=itacademyphotogallerydb;Trusted_Connection=True;");
-
         }
 
     }

@@ -27,7 +27,7 @@ namespace PhotoGallery.WEB.Controllers
             return View();
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PhotoDAL imageModel)
         {
             if (ModelState.IsValid)
@@ -36,17 +36,22 @@ namespace PhotoGallery.WEB.Controllers
                 string wwwRootPath = _hostEnvironment.WebRootPath;
                 string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
                 string extension = Path.GetExtension(imageModel.ImageFile.FileName);
-                imageModel.Title = fileName = fileName + extension;
+
+                imageModel.Title = fileName + extension;
                 imageModel.Path = $"/img/{fileName}";
                 imageModel.Format = extension;
                                              
                 string path = Path.Combine(wwwRootPath + "/img/", fileName);
+
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     await imageModel.ImageFile.CopyToAsync(fileStream);
                 }
+
                 
+                imageModel.Genres.Add(_context.Genres.Where(genre => genre.Id == 1).First());
                 _context.Add(imageModel);
+
                 await _context.SaveChangesAsync();
                 return View();
             }

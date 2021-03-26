@@ -5,9 +5,9 @@ using System.Text;
 
 namespace PhotoGallery.DAL.interfaces
 {
-    public interface IFiveLastPhotoToGenreRepository
+    public interface IFiveLastPhotoToGenreRepository <T> where T : class
     {
-        public IEnumerable<PhotoDAL> GetFiveLastPhotoToGenre(string genre);
+        public IEnumerable<T> GetFiveLastPhotoToGenre(string genre);
 
     }
 }

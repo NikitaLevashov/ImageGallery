@@ -5,8 +5,8 @@ using System.Text;
 
 namespace PhotoGallery.DAL.interfaces
 {
-    public interface IAllPhotoToGenreRepository
+    public interface IAllPhotoToGenreRepository<T> where T:class
     {
-        IEnumerable<PhotoDAL> GetAllFotoToGenry(string genre);
+        IEnumerable<T> GetAllFotoToGenry(string genre);
     }
 }

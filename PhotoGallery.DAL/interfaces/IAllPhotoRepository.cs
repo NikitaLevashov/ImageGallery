@@ -5,8 +5,8 @@ using System.Text;
 
 namespace PhotoGallery.DAL.interfaces
 {
-    public interface IAllPhotoRepository
+    public interface IAllPhotoRepository<T> where T : class
     {
-        IEnumerable<PhotoDAL> GetAllPhoto();
+        IEnumerable<T> GetAllPhoto();
     }
 }

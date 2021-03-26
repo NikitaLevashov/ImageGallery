@@ -3,33 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PhotoGallery.DAL.interfaces;
-using PhotoGallery.DAL.Models;
+using PhotoGallery.BLL.intrerfaces;
+using PhotoGallery.WEB.Models;
 
 namespace PhotoGallery.WEB.Controllers
 {
     public class GalleryController : Controller
     {
 
-        private readonly IAllPhotoToGenreRepository _allPhotoToGenre;
-        private readonly IAllPhotoRepository _allPhoto;
-        public GalleryController(IAllPhotoToGenreRepository allPhotoToGenre, IAllPhotoRepository allPhoto)
+        private readonly IPhotoService _photoService;
+        public GalleryController(IPhotoService photoService)
         {
-            _allPhoto = allPhoto;
-            _allPhotoToGenre = allPhotoToGenre;
+            _photoService = photoService ?? throw new ArgumentNullException();
         }
       
         public IActionResult PhotoViewToGenre(string genre)
         {
-            IEnumerable<PhotoDAL> listPhotoToGenre;
+            IEnumerable<PhotoViewModel> listPhotoToGenre;
 
-            if (genre!=null)
+            if (genre != null)
             {
-                listPhotoToGenre = _allPhotoToGenre.GetAllFotoToGenry(genre).ToList();
+                listPhotoToGenre = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetAllFotoToGenry(genre).ToList());
             }
             else
             {
-                listPhotoToGenre = _allPhoto.GetAllPhoto().ToList();
+                listPhotoToGenre = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetAllPhoto().ToList());
             }
            
             return View(listPhotoToGenre);

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PhotoGallery.BLL\PhotoGallery.BLL.csproj" />
     <ProjectReference Include="..\PhotoGallery.DAL\PhotoGallery.DAL.csproj" />
   </ItemGroup>
 

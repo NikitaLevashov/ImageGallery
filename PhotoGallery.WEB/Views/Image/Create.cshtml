@@ -23,6 +23,18 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
+            <ul>
+                @for (var i = 0; i < Model.Genres.Count; i++)
+                {
+                    <li>
+                        <input type="checkbox" asp-for="@Model.Genres[i].Id" />
+                        <label asp-for="@Model.Genres[i].Id">@Model.Genres[i].Name</label>
+                        <input type="hidden" asp-for="@Model.Genres[i].Id" />
+                        <input type="hidden" asp-for="@Model.Genres[i].Name" />
+                    </li>
+                }
+            </ul>
         </form>
     </div>
 </div>

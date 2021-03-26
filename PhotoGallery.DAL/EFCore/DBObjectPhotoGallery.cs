@@ -41,7 +41,7 @@ namespace PhotoGallery.DAL.EFCore
                 GenreDAL genre2 = new GenreDAL { /*Id = 2,*/ Name = "Forest", Description = "Description2" };
                 GenreDAL genre3 = new GenreDAL { /*Id = 3,*/ Name = "Mountains", Description = "Description3" };
                 GenreDAL genre4 = new GenreDAL { /*Id = 4,*/ Name = "Space", Description = "Description4" };
-                
+
                 db.Genres.AddRange(genre1,genre2,genre3,genre4);
 
                 genre1.Photos.AddRange(new List<PhotoDAL>() { image5, image6, image7, image8, image9, image10, image11, image12, image13, image14});

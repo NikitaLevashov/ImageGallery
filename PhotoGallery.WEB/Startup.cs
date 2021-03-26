@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PhotoGallery.BLL.intrerfaces;
+using PhotoGallery.BLL.PhotoService;
 using PhotoGallery.DAL.EFCore;
 using PhotoGallery.DAL.interfaces;
 using PhotoGallery.DAL.Repository;
@@ -26,11 +29,13 @@ namespace PhotoGallery.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+          
+            //services.AddDbContext<GalleryDBContext>(options =>
+            //  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddDbContext<GalleryDBContext>();
-            services.AddTransient<IAllPhotoToGenreRepository, PhotoRepository>();
-            services.AddTransient<IFiveLastPhotoToGenreRepository, PhotoRepository>();
-            services.AddTransient<IAllPhotoRepository, PhotoRepository>();
+            services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IUnitOfWork, UnitOfWorkRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
