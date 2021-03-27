@@ -15,7 +15,7 @@ namespace PhotoGallery.DAL.Repository
         {
             _database = new GalleryDBContext();
         }
-        public IAllPhotoRepository<PhotoDAL> AllPhotos
+        public IPhotos<PhotoDAL> Photos
         {
             get
             {
@@ -24,7 +24,7 @@ namespace PhotoGallery.DAL.Repository
                 return _photoRepository;
             }
         }
-        public IAllPhotoToGenreRepository<PhotoDAL> AllPhotosToGenre
+        public IPhotos<PhotoDAL> PhotosByGenre
         {
             get
             {
@@ -34,7 +34,7 @@ namespace PhotoGallery.DAL.Repository
             }
         }
         
-        public IFiveLastPhotoToGenreRepository<PhotoDAL> FiveLastPhotoToGenre
+        public IPhotos<PhotoDAL> FiveLastPhotosByGenre
         {
             get
             {

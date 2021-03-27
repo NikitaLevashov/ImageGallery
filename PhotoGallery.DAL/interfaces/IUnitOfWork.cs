@@ -7,8 +7,8 @@ namespace PhotoGallery.DAL.interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IAllPhotoRepository<PhotoDAL> AllPhotos { get; }
-        IAllPhotoToGenreRepository<PhotoDAL> AllPhotosToGenre { get; }
-        IFiveLastPhotoToGenreRepository<PhotoDAL> FiveLastPhotoToGenre { get; }
+        IPhotos<PhotoDAL> Photos { get; }
+        IPhotos<PhotoDAL> PhotosByGenre { get; }
+        IPhotos<PhotoDAL> FiveLastPhotosByGenre { get; }
     }
 }

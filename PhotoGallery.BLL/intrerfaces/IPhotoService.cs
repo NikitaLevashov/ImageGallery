@@ -7,9 +7,9 @@ namespace PhotoGallery.BLL.intrerfaces
 {
     public interface IPhotoService
     {
-        public IEnumerable<PhotoBLL> GetAllFotoToGenry(string genre);
-        public IEnumerable<PhotoBLL> GetAllPhoto();
-        public IEnumerable<PhotoBLL> GetFiveLastPhotoToGenre(string genre);
+        public IEnumerable<PhotoBLL> GetPhotosByGenre(string genre);
+        public IEnumerable<PhotoBLL> GetPhotos();
+        public IEnumerable<PhotoBLL> GetFiveLastPhotosByGenre();
         
     }
 }

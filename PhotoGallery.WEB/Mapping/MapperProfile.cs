@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PhotoGallery.WEB
 {
-    public class ClassMapping
+    public class MapperProfile
     {
         public static IEnumerable<PhotoViewModel> MapToIEnumerablePLPhotos(IEnumerable<PhotoBLL> photosDAL)
         {

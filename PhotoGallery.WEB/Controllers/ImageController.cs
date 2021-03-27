@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PhotoGallery.DAL.EFCore;
 using PhotoGallery.DAL.Models;
 
@@ -24,36 +25,51 @@ namespace PhotoGallery.WEB.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Genres = _context.Genres.ToList();
             return View();
         }
+        
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PhotoDAL imageModel)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(PhotoDAL imageModel, int[] selectedGenres)
         {
             if (ModelState.IsValid)
             {
-                
-                string wwwRootPath = _hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
-                string extension = Path.GetExtension(imageModel.ImageFile.FileName);
+                //string wwwRootPath = _hostEnvironment.WebRootPath;
+                //string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
+                //string extension = Path.GetExtension(imageModel.ImageFile.FileName);
 
-                imageModel.Title = fileName + extension;
-                imageModel.Path = $"/img/{fileName}";
-                imageModel.Format = extension;
+                //imageModel.Title = fileName + extension;
+                //imageModel.Path = $"/img/{fileName}";
+                //imageModel.Format = extension;
                                              
-                string path = Path.Combine(wwwRootPath + "/img/", fileName);
+                //string path = Path.Combine(wwwRootPath + "/img/", fileName);
 
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await imageModel.ImageFile.CopyToAsync(fileStream);
-                }
+                //using (var fileStream = new FileStream(path, FileMode.Create))
+                //{
+                //    await imageModel.ImageFile.CopyToAsync(fileStream);
+                //}
 
-                
-                imageModel.Genres.Add(_context.Genres.Where(genre => genre.Id == 1).First());
-                _context.Add(imageModel);
+                //if (selectedGenres != null)
+                //{
+                //    //получаем выбранные курсы
+                //    foreach (var c in _context.Genres.Where(co => selectedGenres.Contains(co.Id)))
+                //    {
+                //        imageModel.Genres.Add(c);
+                //    }
+                //}
 
-                await _context.SaveChangesAsync();
-                return View();
+                //_context.Entry(newPhoto).State = EntityState.Modified;
+               
+
+
+
+
+                //imageModel.Genres.Add(_context.Genres.Where(genre => genre.Id == 1).First());
+                //_context.Add(imageModel);
+
+                //await _context.SaveChangesAsync();
+                //return View();
             }
             return View(imageModel);
         }
@@ -70,11 +86,10 @@ namespace PhotoGallery.WEB.Controllers
         {
             var imageModel = await _context.Photos.FindAsync(id);
 
-            //delete image from wwwroot/image
             var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModel.Title);
             if (System.IO.File.Exists(imagePath))
                 System.IO.File.Delete(imagePath);
-            //delete the record
+           
             _context.Photos.Remove(imageModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -16,17 +16,18 @@ namespace PhotoGallery.WEB.Controllers
         private readonly IPhotoService _photoService;
         public HomeController(IPhotoService  photoService)
         {
-            _photoService = photoService ?? throw new ArgumentNullException();
+            _photoService = photoService ?? throw new ArgumentNullException("HomeController, PhotoService Error");
         }
 
         public IActionResult Index()
         {
-            var listPhotoToForest = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Forest").ToList());
-            var listPhotoToAnimal = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Animals").ToList());
-            var listPhotoToMountain = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Mountains").ToList());
-            var listPhotoToSpace = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotoToGenre("Space").ToList());
+            var result = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre());
+            //var listPhotoToForest = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Forest").ToList());
+            //var listPhotoToAnimal = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Animals").ToList());
+            //var listPhotoToMountain = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Mountains").ToList());
+            //var listPhotoToSpace = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Space").ToList());
 
-            var result = listPhotoToForest.Union(listPhotoToAnimal).Union(listPhotoToMountain).Union(listPhotoToSpace).ToList();
+            //var result = listPhotoToForest.Union(listPhotoToAnimal).Union(listPhotoToMountain).Union(listPhotoToSpace).ToList();
 
             return View(result);
         }

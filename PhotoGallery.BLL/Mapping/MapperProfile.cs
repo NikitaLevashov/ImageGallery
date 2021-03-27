@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PhotoGallery.BLL.Mapping
 {
-    public class ClassMapping
+    public class MapperProfile
     {
         public static IEnumerable<PhotoBLL> MapToIEnumerableBLLPhotos(IEnumerable<PhotoDAL> photosDAL)
         {

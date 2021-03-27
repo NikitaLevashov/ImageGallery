@@ -23,11 +23,11 @@ namespace PhotoGallery.WEB.Controllers
 
             if (genre != null)
             {
-                listPhotoToGenre = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetAllFotoToGenry(genre).ToList());
+                listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotosByGenre(genre).ToList());
             }
             else
             {
-                listPhotoToGenre = ClassMapping.MapToIEnumerablePLPhotos(_photoService.GetAllPhoto().ToList());
+                listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos().ToList());
             }
            
             return View(listPhotoToGenre);

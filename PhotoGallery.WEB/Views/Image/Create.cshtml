@@ -1,10 +1,10 @@
 ﻿@model PhotoGallery.DAL.Models.PhotoDAL
+@using PhotoGallery.DAL.Models
 
 @{ ViewData["Title"] = "Create"; }
 
 <h1>Create</h1>
 
-<h4>ImageModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,8 +23,18 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+            <div class=checkbox checkboxlist col-sm-9">
+                @foreach (var c in ViewBag.Courses)
+                 {
+                    <input type="checkbox" name="selectedCourses" value="@c.Id"
+                           @(Model.Genres.Contains(c) ? "checked=\"checked\"" : "") />@c.Name <br />
+                 }
 
-            <ul>
+                <p>
+                    <input type="submit" value="Сохранить" />
+                </p>
+            </div>
+            @*<ul>
                 @for (var i = 0; i < Model.Genres.Count; i++)
                 {
                     <li>
@@ -34,7 +44,7 @@
                         <input type="hidden" asp-for="@Model.Genres[i].Name" />
                     </li>
                 }
-            </ul>
+            </ul>*@
         </form>
     </div>
 </div>

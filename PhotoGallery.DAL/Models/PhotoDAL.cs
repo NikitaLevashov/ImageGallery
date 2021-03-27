@@ -17,9 +17,9 @@ namespace PhotoGallery.DAL.Models
         public string Author { get; set; }
         public string Format { get; set; }
         public string Path { get; set; }
-        public List<GenreDAL> Genres { get; set; } = new List<GenreDAL>();
+        public List<GenreDAL> Genres { get; set; }
+
         [NotMapped]
-        [DisplayName("Upload File")]
         public IFormFile ImageFile { get; set; }
     }
 }

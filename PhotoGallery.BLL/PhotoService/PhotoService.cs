@@ -16,19 +16,19 @@ namespace PhotoGallery.BLL.PhotoService
         {
             Database = unitOfWork;
         }
-        public IEnumerable<PhotoBLL> GetAllFotoToGenry(string genre)
+        public IEnumerable<PhotoBLL> GetPhotosByGenre(string genre)
         {
-            return ClassMapping.MapToIEnumerableBLLPhotos(Database.AllPhotosToGenre.GetAllFotoToGenry(genre));
+            return MapperProfile.MapToIEnumerableBLLPhotos(Database.PhotosByGenre.GetPhotosByGenre(genre));
         }
 
-        public IEnumerable<PhotoBLL> GetAllPhoto()
+        public IEnumerable<PhotoBLL> GetPhotos()
         {
-            return ClassMapping.MapToIEnumerableBLLPhotos(Database.AllPhotos.GetAllPhoto());
+            return MapperProfile.MapToIEnumerableBLLPhotos(Database.Photos.GetPhotos());
         }
 
-        public IEnumerable<PhotoBLL> GetFiveLastPhotoToGenre(string genre)
+        public IEnumerable<PhotoBLL> GetFiveLastPhotosByGenre()
         {
-            return ClassMapping.MapToIEnumerableBLLPhotos(Database.FiveLastPhotoToGenre.GetFiveLastPhotoToGenre(genre));
+            return MapperProfile.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetFiveLastPhotosByGenre());
         }
     }
 }

@@ -9,47 +9,58 @@ using System.Linq;
 
 namespace PhotoGallery.DAL.Repository
 {
-    public class PhotoRepository : IAllPhotoToGenreRepository<PhotoDAL>, IFiveLastPhotoToGenreRepository<PhotoDAL>, IAllPhotoRepository<PhotoDAL>
+    public class PhotoRepository : IPhotos<PhotoDAL> 
     {
-        public IEnumerable<PhotoDAL> GetAllPhoto()
+        public IEnumerable<PhotoDAL> GetPhotos()
         {
             using (GalleryDBContext db = new GalleryDBContext())
             {
                 var allPhotos = db.Photos.ToList();
-
                 return allPhotos;
-                
             }
 
         }
-        public IEnumerable<PhotoDAL> GetAllFotoToGenry(string genre)
+        public IEnumerable<PhotoDAL> GetPhotosByGenre(string genre)
         {
             using (GalleryDBContext db = new GalleryDBContext())
             {
-                var genrePhoto = db.Genres.Include(c => c.Photos).ToList();
+                var genrePhoto = db.Genres.Include(c => c.Photos).Where(p => p.Name == genre).SelectMany(d=>d.Photos);
+                var photos = genrePhoto.ToList();
 
-                foreach (var c in genrePhoto)
-                {
-                    if(c.Name==genre)
-                    {
-                        foreach (PhotoDAL s in c.Photos)
-                        {
-                            yield return s;
-                        }
-                    }
+                return photos;
+
+                //var genrePhoto = db.Genres.Include(c => c.Photos).ToList();
+                
+                //foreach (var c in genrePhoto)
+                //{
+                //    if(c.Name==genre)
+                //    {
+                //        foreach (PhotoDAL s in c.Photos)
+                //        {
+                //            yield return s;
+                //        }
+                //    }
                    
-                }
+                //}
             }
            
         }
 
-        public IEnumerable<PhotoDAL> GetFiveLastPhotoToGenre(string genre)
+        public IEnumerable<PhotoDAL> GetFiveLastPhotosByGenre()
         {
-            var genreFhoto = GetAllFotoToGenry(genre);
-            var fiveLastPhotoToGenre = genreFhoto.OrderBy(p=>p.Id).Reverse().Take(5);
+            List <PhotoDAL> photosByGenre = null;  
+            List <PhotoDAL> photosByAllGenres = new List <PhotoDAL>();
+            
+            using (GalleryDBContext db = new GalleryDBContext())
+            {
+                foreach (var item in db.Genres)
+                {
+                    photosByGenre = GetPhotosByGenre(item.Name).OrderByDescending(p => p.Id).Take(5).ToList();
+                    photosByAllGenres.AddRange(photosByGenre);
+                }
+            }
 
-            return fiveLastPhotoToGenre;
-
+            return photosByAllGenres;
         }
     }
 }
