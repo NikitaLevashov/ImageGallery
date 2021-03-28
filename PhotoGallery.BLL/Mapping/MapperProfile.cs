@@ -18,5 +18,24 @@ namespace PhotoGallery.BLL.Mapping
 
             return photosBLL;
         }
+
+        public static IEnumerable<GenreBLL> MapToIEnumerableBLLGenres(IEnumerable<GenreDAL> photosDAL)
+        {
+            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreDAL, GenreBLL>());
+            var mapper = new Mapper(configMapper);
+
+            var genreModel = mapper.Map<IEnumerable<GenreDAL>, IEnumerable<GenreBLL>>(photosDAL);
+           
+            return genreModel;
+        }
+        public static PhotoDAL MapToDALPhoto(PhotoBLL photoDAL)
+        {
+            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreBLL, GenreDAL>());
+            var mapper = new Mapper(configMapper);
+
+            var genreModel = mapper.Map<PhotoBLL,PhotoDAL>(photoDAL);
+            
+            return genreModel;
+        }
     }
 }

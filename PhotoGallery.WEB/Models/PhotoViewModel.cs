@@ -16,6 +16,15 @@ namespace PhotoGallery.WEB.Models
         public string Author { get; set; }
         public string Format { get; set; }
         public string Path { get; set; }
-       
+        //public PhotoViewModel()
+        //{
+        //    Genres = new List<GenreViewModel>();
+        //}
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
+
+        public List<GenreViewModel> Genres { get; set; } = new List<GenreViewModel>();
+
     }
 }

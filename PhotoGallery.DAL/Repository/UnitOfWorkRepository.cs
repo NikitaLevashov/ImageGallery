@@ -1,5 +1,7 @@
-﻿using PhotoGallery.DAL.EFCore;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotoGallery.DAL.EFCore;
 using PhotoGallery.DAL.interfaces;
+using PhotoGallery.DAL.Interfaces;
 using PhotoGallery.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace PhotoGallery.DAL.Repository
     {
         private GalleryDBContext _database;
         private PhotoRepository _photoRepository;
+        private GenreRepository _genreRepository;
         public UnitOfWorkRepository()
         {
             _database = new GalleryDBContext();
@@ -22,6 +25,16 @@ namespace PhotoGallery.DAL.Repository
                 if (_photoRepository==null)
                     _photoRepository = new PhotoRepository();
                 return _photoRepository;
+            }
+        }
+
+        public IGenres<GenreDAL> Genres
+        {
+            get
+            {
+                if (_genreRepository == null)
+                    _genreRepository = new GenreRepository();
+                return _genreRepository;
             }
         }
         public IPhotos<PhotoDAL> PhotosByGenre
@@ -63,5 +76,29 @@ namespace PhotoGallery.DAL.Repository
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public void Save()
+        {
+            _database.SaveChanges();
+        }
+
+        public void AddPhoto(PhotoDAL photo)
+        {
+            _database.Photos.Add(photo);
+        }
+
+       
+        public void Update(PhotoDAL photo)
+        {
+            _database.Photos.Update(photo);
+        }
+
+        public void Delete(PhotoDAL photo)
+        {
+            _database.Photos.Remove(photo);
+        }
+
+
+        
     }
 }

@@ -43,7 +43,6 @@ namespace PhotoGallery.DAL.Repository
                    
                 //}
             }
-           
         }
 
         public IEnumerable<PhotoDAL> GetFiveLastPhotosByGenre()
@@ -61,6 +60,38 @@ namespace PhotoGallery.DAL.Repository
             }
 
             return photosByAllGenres;
+        }
+
+        public void AddPhoto(PhotoDAL photo)
+        {
+            using (GalleryDBContext db = new GalleryDBContext())
+            {
+                db.Photos.Add(photo);
+            }
+        }
+
+        public void Save(PhotoDAL photo)
+        {
+            using (GalleryDBContext db = new GalleryDBContext())
+            {
+                db.SaveChanges();
+            }
+        }
+
+        public void Update(PhotoDAL photo)
+        {
+            using (GalleryDBContext db = new GalleryDBContext())
+            {
+                db.Photos.Update(photo);
+            }
+        }
+
+        public void Delete(PhotoDAL photo)
+        {
+            using (GalleryDBContext db = new GalleryDBContext())
+            {
+                db.Photos.Remove(photo);
+            }
         }
     }
 }

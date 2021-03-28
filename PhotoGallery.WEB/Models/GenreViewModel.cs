@@ -10,11 +10,9 @@ namespace PhotoGallery.WEB.Models
 {
     public class GenreViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<PhotoBLL> Photos { get; set; } = new List<PhotoBLL>();
+        public List<PhotoViewModel> Photos { get; set; } = new List<PhotoViewModel>();
     }
 }

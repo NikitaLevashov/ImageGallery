@@ -22,12 +22,6 @@ namespace PhotoGallery.WEB.Controllers
         public IActionResult Index()
         {
             var result = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre());
-            //var listPhotoToForest = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Forest").ToList());
-            //var listPhotoToAnimal = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Animals").ToList());
-            //var listPhotoToMountain = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Mountains").ToList());
-            //var listPhotoToSpace = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre("Space").ToList());
-
-            //var result = listPhotoToForest.Union(listPhotoToAnimal).Union(listPhotoToMountain).Union(listPhotoToSpace).ToList();
 
             return View(result);
         }

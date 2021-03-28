@@ -18,6 +18,10 @@ namespace PhotoGallery.DAL.Models
         public string Format { get; set; }
         public string Path { get; set; }
         public List<GenreDAL> Genres { get; set; }
+        public PhotoDAL()
+        {
+            Genres = new List<GenreDAL>();
+        }
 
         [NotMapped]
         public IFormFile ImageFile { get; set; }

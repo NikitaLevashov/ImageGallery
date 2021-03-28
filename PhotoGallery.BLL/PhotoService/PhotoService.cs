@@ -30,5 +30,30 @@ namespace PhotoGallery.BLL.PhotoService
         {
             return MapperProfile.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetFiveLastPhotosByGenre());
         }
+
+        public IEnumerable<GenreBLL> GetGenres()
+        {
+            return MapperProfile.MapToIEnumerableBLLGenres(Database.Genres.GetGenres());
+        }
+
+        public void Save()
+        {
+            Database.Save();
+        }
+
+        public void AddPhoto(PhotoBLL photo)
+        {
+            Database.AddPhoto(MapperProfile.MapToDALPhoto(photo));
+        }
+
+        public void Update(PhotoBLL photo)
+        {
+            Database.Update(MapperProfile.MapToDALPhoto(photo));
+        }
+
+        public void Delete(PhotoBLL photo)
+        {
+            Database.Delete(MapperProfile.MapToDALPhoto(photo));
+        }
     }
 }

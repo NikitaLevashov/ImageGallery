@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PhotoGallery.BLL.intrerfaces;
+using PhotoGallery.BLL.Models;
 using PhotoGallery.DAL.EFCore;
 using PhotoGallery.DAL.Models;
+using PhotoGallery.WEB.Models;
 
 namespace PhotoGallery.WEB.Controllers
 {
@@ -15,84 +18,133 @@ namespace PhotoGallery.WEB.Controllers
     {
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly GalleryDBContext _context;
+        IPhotoService _photoService;
 
-        public ImageController(IWebHostEnvironment hostEnvironment, GalleryDBContext context)
+        public ImageController(IWebHostEnvironment hostEnvironment, GalleryDBContext context, IPhotoService photoService)
         {
+            _photoService=photoService;
             _context = context;
             _hostEnvironment = hostEnvironment;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+
+            return View(photos);
+            
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Genres = _context.Genres.ToList();
+            ViewBag.Genres = _photoService.GetGenres().ToList();
             return View();
         }
         
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PhotoDAL imageModel, int[] selectedGenres)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(PhotoViewModel imageModel, int[] selectedGenres)
         {
             if (ModelState.IsValid)
             {
-                //string wwwRootPath = _hostEnvironment.WebRootPath;
-                //string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
-                //string extension = Path.GetExtension(imageModel.ImageFile.FileName);
+                if (selectedGenres != null)
+                {
+                    var genres = MapperProfile.MapToIEnumerablePLGenres(_photoService.GetGenres());
+                    foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
+                    {
+                        imageModel.Genres.Add(c);
+                    }
+                }
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
+                string extension = Path.GetExtension(imageModel.ImageFile.FileName);
 
-                //imageModel.Title = fileName + extension;
-                //imageModel.Path = $"/img/{fileName}";
-                //imageModel.Format = extension;
-                                             
-                //string path = Path.Combine(wwwRootPath + "/img/", fileName);
+                imageModel.Title = fileName + extension;
+                imageModel.Path = $"/img/{fileName}";
+                imageModel.Format = extension;
+                            
+                string path = Path.Combine(wwwRootPath + "/img/", fileName);
 
-                //using (var fileStream = new FileStream(path, FileMode.Create))
-                //{
-                //    await imageModel.ImageFile.CopyToAsync(fileStream);
-                //}
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await imageModel.ImageFile.CopyToAsync(fileStream);
+                }
 
-                //if (selectedGenres != null)
-                //{
-                //    //получаем выбранные курсы
-                //    foreach (var c in _context.Genres.Where(co => selectedGenres.Contains(co.Id)))
-                //    {
-                //        imageModel.Genres.Add(c);
-                //    }
-                //}
-
-                //_context.Entry(newPhoto).State = EntityState.Modified;
-               
-
-
-
-
-                //imageModel.Genres.Add(_context.Genres.Where(genre => genre.Id == 1).First());
-                //_context.Add(imageModel);
-
-                //await _context.SaveChangesAsync();
-                //return View();
+                _photoService.AddPhoto(MapperProfile.MapToBLLPhoto(imageModel));
+                _photoService.Save();
+                //_context.Photos.Add(imageModel);
+                //_context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return View(imageModel);
+            return RedirectToAction("Index");
         }
 
+       
         [HttpGet]
-        public IActionResult Delete()
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+                PhotoViewModel photo = photos.FirstOrDefault(p => p.Id == id);
+
+                if (photo != null)
+                    return View(photo);
+            }
+            return NotFound();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var imageModel = await _context.Photos.FindAsync(id);
+            if (id != null)
+            {
+                var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+                PhotoViewModel photo = photos.FirstOrDefault(p => p.Id == id);
+                if (photo != null)
+                {
+                    _photoService.Delete(MapperProfile.MapToBLLPhoto(photo));
+                    _photoService.Save();
+                    //_context.Photos.Remove(photo);
+                    //await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            return NotFound();
+        }
 
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModel.Title);
-            if (System.IO.File.Exists(imagePath))
-                System.IO.File.Delete(imagePath);
-           
-            _context.Photos.Remove(imageModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id != null)
+            {
+                var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+
+                var photo = photos.FirstOrDefault(p => p.Id == id);
+                if (photo != null)
+                    return View(photo);
+            }
+            return NotFound();
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id != null)
+            {
+                var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+                var photo = photos.FirstOrDefault(c => c.Id == id);
+                if (photo != null)
+                    return View(photo);
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(PhotoViewModel photo)
+        {
+            _photoService.Update(MapperProfile.MapToBLLPhoto(photo));
+            _photoService.Save();
+       
+            return RedirectToAction("Index");
         }
     }
 }

@@ -13,6 +13,10 @@ namespace PhotoGallery.DAL.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<PhotoDAL> Photos { get; set; } = new List<PhotoDAL>();        
+        public List<PhotoDAL> Photos { get; set; } = new List<PhotoDAL>();
+        public GenreDAL()
+        {
+            Photos = new List<PhotoDAL>();
+        }
     }
 }

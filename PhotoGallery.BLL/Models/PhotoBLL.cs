@@ -15,6 +15,8 @@ namespace PhotoGallery.BLL.Models
         public string Author { get; set; }
         public string Format { get; set; }
         public string Path { get; set; }
-        
+        public IFormFile ImageFile { get; set; }
+        public List<GenreBLL> Genres { get; set; } = new List<GenreBLL>();
+
     }
 }

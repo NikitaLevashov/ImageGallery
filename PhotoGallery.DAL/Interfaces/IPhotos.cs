@@ -9,5 +9,10 @@ namespace PhotoGallery.DAL.interfaces
         IEnumerable<T> GetPhotos();
         IEnumerable<T> GetPhotosByGenre(string genre);
         IEnumerable<T> GetFiveLastPhotosByGenre();
+        void AddPhoto(T photo);
+        void Save(T photo);
+        void Update(T photo);
+        void Delete(T photo);
+
     }
 }

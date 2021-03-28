@@ -19,5 +19,24 @@ namespace PhotoGallery.WEB
 
             return photosViewModel;
         }
+
+        public static IEnumerable<GenreViewModel> MapToIEnumerablePLGenres(IEnumerable<GenreBLL> photosBLL)
+        {
+            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreBLL, GenreViewModel>());
+            var mapper = new Mapper(configMapper);
+
+            var genresViewModel = mapper.Map<IEnumerable<GenreBLL>, IEnumerable<GenreViewModel>>(photosBLL);
+
+            return genresViewModel;
+        }
+        public static PhotoBLL MapToBLLPhoto(PhotoViewModel photoPL)
+        {
+            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<PhotoViewModel, PhotoBLL>());
+            var mapper = new Mapper(configMapper);
+
+            var genreModel = mapper.Map<PhotoViewModel, PhotoBLL>(photoPL);
+
+            return genreModel;
+        }
     }
 }
