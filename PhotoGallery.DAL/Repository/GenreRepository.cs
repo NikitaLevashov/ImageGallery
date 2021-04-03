@@ -17,7 +17,6 @@ namespace PhotoGallery.DAL.Repository
                 var allGenre = db.Genres.ToList();
                 return allGenre;
             }
-
         }
     }
 }

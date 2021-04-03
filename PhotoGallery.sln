@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoGallery.WEB", "PhotoGallery.WEB\PhotoGallery.WEB.csproj", "{7DD2A79B-997C-4EDB-8163-3AFAAA8F92C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoGallery.WEB", "PhotoGallery.WEB\PhotoGallery.WEB.csproj", "{7DD2A79B-997C-4EDB-8163-3AFAAA8F92C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoGallery.BLL", "PhotoGallery.BLL\PhotoGallery.BLL.csproj", "{BA5527F2-BB8C-4ED2-806A-CA6260152CA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoGallery.BLL", "PhotoGallery.BLL\PhotoGallery.BLL.csproj", "{BA5527F2-BB8C-4ED2-806A-CA6260152CA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoGallery.DAL", "PhotoGallery.DAL\PhotoGallery.DAL.csproj", "{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoGallery.DAL", "PhotoGallery.DAL\PhotoGallery.DAL.csproj", "{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthPhotoGallery", "AuthPhotoGallery\AuthPhotoGallery.csproj", "{2EC16709-80DD-419C-AE86-343627CC70CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC16709-80DD-419C-AE86-343627CC70CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC16709-80DD-419C-AE86-343627CC70CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC16709-80DD-419C-AE86-343627CC70CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC16709-80DD-419C-AE86-343627CC70CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

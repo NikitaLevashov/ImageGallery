@@ -28,14 +28,43 @@ namespace PhotoGallery.BLL.Mapping
            
             return genreModel;
         }
-        public static PhotoDAL MapToDALPhoto(PhotoBLL photoDAL)
+        public static PhotoDAL MapToDALPhoto(PhotoBLL photoBL)
         {
-            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreBLL, GenreDAL>());
-            var mapper = new Mapper(configMapper);
+            //var configMapper = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.CreateMap<PhotoBLL, PhotoDAL>()
+            //        .ForMember(dto => dto.Genres, opt => opt.MapFrom(x => x.Genres))
+            //        .ForMember(res => res.Format, opt => opt.MapFrom(dto => dto.Format))
+            //        .ForMember(res => res.Author, opt => opt.MapFrom(dto => dto.Author))
+            //        .ForMember(res => res.Id, opt => opt.MapFrom(dto => dto.Id))
+            //        .ForMember(res => res.Title, opt => opt.MapFrom(dto => dto.Title))
+            //        .ForMember(res => res.Path, opt => opt.MapFrom(dto => dto.Path));
 
-            var genreModel = mapper.Map<PhotoBLL,PhotoDAL>(photoDAL);
-            
-            return genreModel;
+
+            //    cfg.CreateMap<GenreBLL, GenreDAL>();
+            //});
+
+            ////var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreBLL, GenreDAL>());
+            //var mapper = new Mapper(configMapper);
+
+
+
+            //var genreModel = mapper.Map<PhotoBLL,PhotoDAL>(photoDAL);
+
+            //return genreModel;
+
+            var photoDAL = new PhotoDAL
+            {
+                Id = photoBL.Id,
+                Title = photoBL.Title,
+                Path = photoBL.Path,
+                Format = photoBL.Format,
+                Author = photoBL.Author,
+                ImageFile = photoBL.ImageFile,
+                Genres = new List<GenreDAL>(),
+            };
+
+            return photoDAL;
         }
     }
 }

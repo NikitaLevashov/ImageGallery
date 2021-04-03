@@ -98,7 +98,5 @@ namespace PhotoGallery.DAL.Repository
             _database.Photos.Remove(photo);
         }
 
-
-        
     }
 }

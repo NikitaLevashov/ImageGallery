@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ using PhotoGallery.WEB.Models;
 
 namespace PhotoGallery.WEB.Controllers
 {
+    
+    //[Route("api/[controller]")]
     public class ImageController : Controller
     {
         private readonly IWebHostEnvironment _hostEnvironment;
@@ -26,6 +29,10 @@ namespace PhotoGallery.WEB.Controllers
             _context = context;
             _hostEnvironment = hostEnvironment;
         }
+
+        //[Route("getlogin")]
+        //[Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
@@ -34,12 +41,15 @@ namespace PhotoGallery.WEB.Controllers
             
         }
 
+        //[Route("getlogin")]
+        //[Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             ViewBag.Genres = _photoService.GetGenres().ToList();
             return View();
         }
+
         
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -49,7 +59,8 @@ namespace PhotoGallery.WEB.Controllers
             {
                 if (selectedGenres != null)
                 {
-                    var genres = MapperProfile.MapToIEnumerablePLGenres(_photoService.GetGenres());
+                    var genres = /*_context.Genres;*/
+                    MapperProfile.MapToIEnumerablePLGenres(_photoService.GetGenres());
                     foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
                     {
                         imageModel.Genres.Add(c);
@@ -70,8 +81,13 @@ namespace PhotoGallery.WEB.Controllers
                     await imageModel.ImageFile.CopyToAsync(fileStream);
                 }
 
-                _photoService.AddPhoto(MapperProfile.MapToBLLPhoto(imageModel));
+                var imageModelDAL = MapperProfile.MapToBLLPhoto(imageModel);
+
+                //_context.Photos.Add(imageModel);
+                //_context.SaveChanges();
+                _photoService.AddPhoto(imageModelDAL);
                 _photoService.Save();
+
                 //_context.Photos.Add(imageModel);
                 //_context.SaveChanges();
                 return RedirectToAction("Index");

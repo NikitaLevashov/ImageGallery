@@ -31,12 +31,41 @@ namespace PhotoGallery.WEB
         }
         public static PhotoBLL MapToBLLPhoto(PhotoViewModel photoPL)
         {
-            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<PhotoViewModel, PhotoBLL>());
-            var mapper = new Mapper(configMapper);
+            //var configMapper = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.CreateMap<PhotoViewModel, PhotoBLL>()
+            //        .ForMember(dto => dto.Genres, opt => opt.MapFrom(x => x.Genres))
+            //        .ForMember(res => res.Format, opt => opt.MapFrom(dto => dto.Format))
+            //        .ForMember(res => res.Author, opt => opt.MapFrom(dto => dto.Author))
+            //        .ForMember(res => res.Id, opt => opt.MapFrom(dto => dto.Id))
+            //        .ForMember(res => res.Title, opt => opt.MapFrom(dto => dto.Title))
+            //        .ForMember(res => res.Path, opt => opt.MapFrom(dto => dto.Path));
 
-            var genreModel = mapper.Map<PhotoViewModel, PhotoBLL>(photoPL);
+            //    cfg.CreateMap<GenreViewModel, GenreBLL>();
+            //});
 
-            return genreModel;
+            ////var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<PhotoViewModel, PhotoBLL>());
+            //var mapper = new Mapper(configMapper);
+
+            //var genreModel = mapper.Map<PhotoViewModel, PhotoBLL>(photoPL);
+
+
+
+            //return genreModel;
+
+            var photoBL = new PhotoBLL
+            {
+                Id = photoPL.Id,
+                Title = photoPL.Title,
+                Path = photoPL.Path,
+                Format = photoPL.Format,
+                Author = photoPL.Author,
+                ImageFile = photoPL.ImageFile,
+                Genres = new List<GenreBLL>(),
+            };
+
+            return photoBL;
+            
         }
     }
 }
