@@ -11,7 +11,6 @@ namespace PhotoGallery.DAL.Repository
 {
     public class PhotoRepository : IPhotos<PhotoDAL> 
     {
-        GalleryDBContext galleryDBContext;
         public IEnumerable<PhotoDAL> GetPhotos()
         {
             using (GalleryDBContext db = new GalleryDBContext())
@@ -29,20 +28,6 @@ namespace PhotoGallery.DAL.Repository
                 var photos = genrePhoto.ToList();
 
                 return photos;
-
-                //var genrePhoto = db.Genres.Include(c => c.Photos).ToList();
-                
-                //foreach (var c in genrePhoto)
-                //{
-                //    if(c.Name==genre)
-                //    {
-                //        foreach (PhotoDAL s in c.Photos)
-                //        {
-                //            yield return s;
-                //        }
-                //    }
-                   
-                //}
             }
         }
 
@@ -65,21 +50,10 @@ namespace PhotoGallery.DAL.Repository
 
         public void AddPhoto(PhotoDAL photo)
         {
-          //var phottr =  galleryDBContext.Genres.SingleOrDefault(c=>c.Id==photo.Genres.)
-
-              
-                
-            galleryDBContext.Photos.Add(photo);
-
-            //var companyDB = galleryDBContext.Genres.SingleOrDefault(c => c.Id == photo.Id);
-            //photo.Genres = companyDB;
-            //context.Groups.Add(group);
-            //await context.SaveChangesAsync();
-
-            ////using (GalleryDBContext db = new GalleryDBContext())
-            ////{
-            ////    db.Photos.Add(photo);
-            ////}
+            using (GalleryDBContext db = new GalleryDBContext())
+            {
+                db.Photos.Add(photo);
+            }
         }
 
         public void Save(PhotoDAL photo)

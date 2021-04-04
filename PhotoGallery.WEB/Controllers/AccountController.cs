@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AuthPhotoGallery.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using PhotoGallery.BLL.intrerfaces;
 using PhotoGallery.DAL.EFCore;
 using PhotoGallery.DAL.Models;
 
@@ -14,6 +15,7 @@ namespace PhotoGallery.WEB.Controllers
 {
     public class AccountController : Controller
     {
+        IPhotoService _photoService;
         // тестовые данные вместо использования базы данных
         private List<Person> people = new List<Person>
         {
@@ -29,8 +31,10 @@ namespace PhotoGallery.WEB.Controllers
 
 
         [HttpPost("/token")]
-        public IActionResult Token(string username, string password)
+        public IActionResult Token([FromForm]string username, [FromForm]string password)
         {
+            var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+            ViewBag.Photos = photos;
             var identity = GetIdentity(username, password);
             if (identity == null)
             {

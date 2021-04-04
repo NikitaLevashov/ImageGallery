@@ -16,7 +16,7 @@ using PhotoGallery.WEB.Models;
 namespace PhotoGallery.WEB.Controllers
 {
     
-    //[Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class ImageController : Controller
     {
         private readonly IWebHostEnvironment _hostEnvironment;
@@ -30,19 +30,18 @@ namespace PhotoGallery.WEB.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        //[Route("getlogin")]
-        //[Authorize]
+        [Route("/api/image/getlogin")]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
-
-            return View(photos);
-            
+                   
+            return View();
         }
 
         //[Route("getlogin")]
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {

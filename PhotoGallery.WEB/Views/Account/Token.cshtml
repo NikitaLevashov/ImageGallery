@@ -1,27 +1,54 @@
-﻿<!DOCTYPE html>
+﻿@model List<PhotoGallery.WEB.Models.PhotoViewModel>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title>JWT в ASP.NET Core Web API</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="userInfo" style="display:none;">
-        <p>Вы вошли как: <span id="userName"></span></p>
-        <input type="submit" value="Выйти" id="logOut" />
-    </div>
-    <div id="loginForm">
-        <h3>Вход на сайт</h3>
-        <label>Введите email</label><br />
-        <input type="email" id="emailLogin" /> <br /><br />
-        <label>Введите пароль</label><br />
-        <input type="password" id="passwordLogin" /><br /><br />
-        <input type="submit" id="submitLogin" value="Логин" />
-    </div>
-    <div>
-        <input type="submit" id="getDataByLogin" value="Перейти к работе с файлами" />
-    </div>
-   
+    <div class="text-center">
+        <div id="userInfo" style="display:none;">
+            <p>Вы вошли как: <span id="userName"></span></p>
+            <input type="submit" value="Выйти" id="logOut" />
+            <div>
+                <input type="submit" id="getDataByLogin" value="Перейти к работе с файлами" />
+            </div>
+            <table class="table">
 
+                @foreach (var item in ViewBag.Photos)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Image" asp-route-id="@item.Id">Details"</a> |
+                            <a asp-action="Edit" asp-controller="Image" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-controller="Image" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="loginForm">
+            <h3>Вход на сайт</h3>
+            <label>Введите email</label><br />
+            <input class="btn btn-primary" type="email" id="emailLogin" /> <br /><br />
+            <label>Введите пароль</label><br />
+            <input type="password" class="btn btn-primary" id="passwordLogin" /><br /><br />
+            <input type="submit" class="btn btn-success" id="submitLogin" value="Логин" />
+        </div>
+        @*<div id="userInfo" style="display:none;">
+                <input type="submit"  id="getDataByLogin" value="Перейти к работе с файлами" />
+            </div>*@
+
+    </div>
     <script>
         var tokenKey = "accessToken";
 
@@ -78,7 +105,7 @@
             else
                 console.log("Status: ", response.status);
         };
-        
+
         // получаем токен
         document.getElementById("submitLogin").addEventListener("click", e => {
             e.preventDefault();
@@ -95,12 +122,10 @@
             sessionStorage.removeItem(tokenKey);
         });
 
-        getData("Image/getlogin");
         // кнопка получения имя пользователя  - /api/values/getlogin
         document.getElementById("getDataByLogin").addEventListener("click", e => {
-
             e.preventDefault();
-               getData("Image/getlogin");
+            getData("/api/image/getlogin");
         });
 
     </script>

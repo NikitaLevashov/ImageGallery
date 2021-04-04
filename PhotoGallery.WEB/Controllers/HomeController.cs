@@ -36,5 +36,11 @@ namespace PhotoGallery.WEB.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public ActionResult PhotoSearch(string name)
+        {
+            var allbooks = _photoService.GetPhotos().Where(a => a.Title.Contains(name)).ToList();
+            return PartialView(allbooks);
+        }
     }
 }

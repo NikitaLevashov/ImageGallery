@@ -1,4 +1,5 @@
-﻿using PhotoGallery.DAL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotoGallery.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ namespace PhotoGallery.DAL.EFCore
     {
         public static void Initial()
         {
+            
             using (GalleryDBContext db = new GalleryDBContext())
             {
                 // пересоздадим базу данных
