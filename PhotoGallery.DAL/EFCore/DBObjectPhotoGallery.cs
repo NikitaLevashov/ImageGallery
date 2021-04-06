@@ -18,17 +18,17 @@ namespace PhotoGallery.DAL.EFCore
                 db.Database.EnsureCreated();
 
                 // создание и добавление моделей
-                PhotoDAL image1 = new PhotoDAL { /*Id = 1,*/ Title= "Title1", Author="Author1", Format="jpg", Path="/img/image1.jpg"};
-                PhotoDAL image2 = new PhotoDAL { /*Id = 2,*/ Title = "Title2", Author = "Author2", Format = "jpg", Path = "/img/image2.jpg" };
+                PhotoDAL image1 = new PhotoDAL { /*Id = 1,*/ Title= "Bitle1", Author="Author1", Format="jpg", Path="/img/image1.jpg"};
+                PhotoDAL image2 = new PhotoDAL { /*Id = 2,*/ Title = "Bitle2", Author = "Author2", Format = "jpg", Path = "/img/image2.jpg" };
                 PhotoDAL image3 = new PhotoDAL { /*Id = 3,*/ Title = "Title3", Author = "Author3", Format = "jpg", Path = "/img/image3.jpg" };
                 PhotoDAL image4 = new PhotoDAL { /*Id = 4,*/ Title = "Title4", Author = "Author4", Format = "jpg", Path = "/img/image4.jpg" };
                 PhotoDAL image5 = new PhotoDAL { /*Id = 5,*/ Title = "Title5", Author = "Author5", Format = "jpg", Path = "/img/image5.jpg" };
                 PhotoDAL image6 = new PhotoDAL { /*Id = 6,*/ Title = "Title6", Author = "Author6", Format = "jpg", Path = "/img/image6.jpg" };
                 PhotoDAL image7 = new PhotoDAL { /*Id = 7,*/ Title = "Title7", Author = "Author7", Format = "jpg", Path = "/img/image7.jpg" };
-                PhotoDAL image8 = new PhotoDAL { /*Id = 8,*/ Title = "Title8", Author = "Author8", Format = "jpg", Path = "/img/image8.jpg" };
-                PhotoDAL image9 = new PhotoDAL { /*Id = 9,*/ Title = "Title9", Author = "Author9", Format = "jpg", Path = "/img/image9.jpg" };
-                PhotoDAL image10 = new PhotoDAL { /*Id = 10,*/ Title = "Title10", Author = "Author10", Format = "jpg", Path = "/img/image10.jpg" };
-                PhotoDAL image11 = new PhotoDAL { /*Id = 11,*/ Title = "Title11", Author = "Author11", Format = "jpg", Path = "/img/image11.jpg" };
+                PhotoDAL image8 = new PhotoDAL { /*Id = 8,*/ Title = "Citle8", Author = "Author8", Format = "jpg", Path = "/img/image8.jpg" };
+                PhotoDAL image9 = new PhotoDAL { /*Id = 9,*/ Title = "Citle9", Author = "Author9", Format = "jpg", Path = "/img/image9.jpg" };
+                PhotoDAL image10 = new PhotoDAL { /*Id = 10,*/ Title = "Citle10", Author = "Author10", Format = "jpg", Path = "/img/image10.jpg" };
+                PhotoDAL image11 = new PhotoDAL { /*Id = 11,*/ Title = "Citle11", Author = "Author11", Format = "jpg", Path = "/img/image11.jpg" };
                 PhotoDAL image12 = new PhotoDAL { /*Id = 12,*/ Title = "Title12", Author = "Author12", Format = "jpg", Path = "/img/image12.jpg" };
                 PhotoDAL image13 = new PhotoDAL { /*Id = 13,*/ Title = "Title13", Author = "Author13", Format = "jpg", Path = "/img/image13.jpg" };
                 PhotoDAL image14 = new PhotoDAL { /*Id = 14,*/ Title = "Title14", Author = "Author14", Format = "jpg", Path = "/img/image14.jpg" };

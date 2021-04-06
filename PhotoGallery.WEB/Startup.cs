@@ -16,6 +16,11 @@ using PhotoGallery.DAL.interfaces;
 using PhotoGallery.DAL.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using PhotoGallery.BLL.ChatService;
+using Microsoft.AspNetCore.Http.Connections;
 
 namespace PhotoGallery.WEB
 {
@@ -36,6 +41,12 @@ namespace PhotoGallery.WEB
             //  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddDbContext<GalleryDBContext>();
+            services.AddControllers()
+               .AddNewtonsoftJson(options =>
+               {
+                   options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+               });
+            services.AddSignalR();
             services.AddTransient<IPhotoService, PhotoService>();
             services.AddTransient<IUnitOfWork, UnitOfWorkRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -84,14 +95,15 @@ namespace PhotoGallery.WEB
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                      name: "default",
+                      pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
 
             DBObjectPhotoGallery.Initial();
-        }
-    }
+    }   }
 }

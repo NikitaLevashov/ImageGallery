@@ -1,11 +1,12 @@
 ﻿@model List<PhotoGallery.WEB.Models.PhotoViewModel>
 <p></p>
-<div align="center"> 
+<div align="center">
     <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre">All</a>
     <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Forest">Forest</a>
     <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Animals">Animals</a>
     <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Mountains">Mountains</a>
-    <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Space">Space</a></div>
+    <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Space">Space</a>
+</div>
 <br />
 <div class="container body-content">
     <div class="row gallery-content">
@@ -17,3 +18,4 @@
         }
     </div>
 </div>
+

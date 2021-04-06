@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoGallery.BLL", "PhotoGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoGallery.DAL", "PhotoGallery.DAL\PhotoGallery.DAL.csproj", "{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthPhotoGallery", "AuthPhotoGallery\AuthPhotoGallery.csproj", "{2EC16709-80DD-419C-AE86-343627CC70CE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C1506EB-18ED-41FA-AB44-EE65EA8A073F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EC16709-80DD-419C-AE86-343627CC70CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EC16709-80DD-419C-AE86-343627CC70CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EC16709-80DD-419C-AE86-343627CC70CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EC16709-80DD-419C-AE86-343627CC70CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

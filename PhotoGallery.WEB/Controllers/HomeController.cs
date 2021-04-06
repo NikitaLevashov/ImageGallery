@@ -37,10 +37,49 @@ namespace PhotoGallery.WEB.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public ActionResult PhotoSearch(string name)
+       
+        public IActionResult PhotoSearch()
         {
-            var allbooks = _photoService.GetPhotos().Where(a => a.Title.Contains(name)).ToList();
-            return PartialView(allbooks);
+            return View();
         }
+        public JsonResult AutoComplete(string prefix)
+        {
+            List<PhotoViewModel> photoList = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
+
+            var photos = (from photo in photoList
+                          where photo.Title.StartsWith(prefix) 
+                          select new
+                          {
+                              image = photo.Path,
+                              label = photo.Title,
+                              val = photo.Id
+
+                          }).ToList();
+
+            return Json(photos);
+        }
+
+        [HttpPost]
+        public ActionResult PhotoSearch(PhotoViewModel city)
+        {
+            List<PhotoViewModel> photoList = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
+            foreach(var item in photoList)
+            {
+                if(city.Title==item.Title)
+                {
+                    ViewBag.Message = item.Path;
+                    return View();
+                }
+            }
+          
+            return NotFound();
+        }
+
+        public ActionResult Chat()
+        {
+            return View();
+        }
+
     }
+  
 }

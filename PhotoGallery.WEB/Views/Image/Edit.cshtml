@@ -23,15 +23,18 @@
                 <input asp-for="Author" class="form-control" />
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
-          
-            <div class="form-group">
-                <label asp-for="Path" class="control-label"></label>
-                <input asp-for="Path" class="form-control" />
-                <span asp-validation-for="Path" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
+            <div class=checkbox checkboxlist col-sm-9">
+                @foreach (var c in ViewBag.Genres)
+                {
+                    <input type="checkbox" name="selectedGenres" value="@c.Id" />@c.Name <br />
+                }
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+           </div>
+           
         </form>
     </div>
 </div>

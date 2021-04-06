@@ -16,32 +16,30 @@ using PhotoGallery.WEB.Models;
 namespace PhotoGallery.WEB.Controllers
 {
     
-    [Route("api/[controller]/[action]")]
+    //[Route("api/[controller]/[action]")]
     public class ImageController : Controller
     {
         private readonly IWebHostEnvironment _hostEnvironment;
-        private readonly GalleryDBContext _context;
-        IPhotoService _photoService;
+        private readonly IPhotoService _photoService;
 
-        public ImageController(IWebHostEnvironment hostEnvironment, GalleryDBContext context, IPhotoService photoService)
+        public ImageController(IWebHostEnvironment hostEnvironment, IPhotoService photoService)
         {
-            _photoService=photoService;
-            _context = context;
-            _hostEnvironment = hostEnvironment;
+            _photoService=photoService ?? throw new ArgumentNullException("ImageController, PhotoService Error");
+            _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException("ImageController, PhotoService Error");
         }
 
-        [Route("/api/image/getlogin")]
-        [Authorize]
+        //[Route("/api/image/getlogin")]
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
                    
-            return View();
+            return View(photos);
         }
 
         //[Route("getlogin")]
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -82,13 +80,9 @@ namespace PhotoGallery.WEB.Controllers
 
                 var imageModelDAL = MapperProfile.MapToBLLPhoto(imageModel);
 
-                //_context.Photos.Add(imageModel);
-                //_context.SaveChanges();
                 _photoService.AddPhoto(imageModelDAL);
                 _photoService.Save();
 
-                //_context.Photos.Add(imageModel);
-                //_context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
@@ -121,8 +115,7 @@ namespace PhotoGallery.WEB.Controllers
                 {
                     _photoService.Delete(MapperProfile.MapToBLLPhoto(photo));
                     _photoService.Save();
-                    //_context.Photos.Remove(photo);
-                    //await _context.SaveChangesAsync();
+                
                     return RedirectToAction("Index");
                 }
             }
@@ -144,6 +137,8 @@ namespace PhotoGallery.WEB.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Genres = _photoService.GetGenres().ToList();
+
             if (id != null)
             {
                 var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
@@ -154,8 +149,21 @@ namespace PhotoGallery.WEB.Controllers
             return NotFound();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(PhotoViewModel photo)
+        public async Task<IActionResult> Edit(PhotoViewModel photo, int[] selectedGenres)
         {
+            if (selectedGenres != null)
+            {
+                var genres = /*_context.Genres;*/
+                MapperProfile.MapToIEnumerablePLGenres(_photoService.GetGenres());
+                foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
+                {
+                    photo.Genres.Add(c);
+                }
+            }
+
+            
+
+            
             _photoService.Update(MapperProfile.MapToBLLPhoto(photo));
             _photoService.Save();
        

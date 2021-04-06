@@ -15,23 +15,21 @@ namespace PhotoGallery.WEB.Models
 
         [StringLength(15)]
 
-        [Required(ErrorMessage = "Укажите заглавие")]
+        //[Required(ErrorMessage = "Please enter author")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Не указан автор")]
+        [StringLength(15)]
+
+        [Required(ErrorMessage = "Please enter author")]
         public string Author { get; set; }
         public string Format { get; set; }
         public string Path { get; set; }
 
-        //public PhotoViewModel()
-        //{
-        //    Genres = new List<GenreViewModel>();
-        //}
-        [Required(ErrorMessage = "Не загружено фото")]
+       //[Required(ErrorMessage = "Please choose gender")]
         public IFormFile ImageFile { get; set; }
 
-        [Required(ErrorMessage = "Укажите жанр")]
-        public List<GenreViewModel> Genres { get; set; } = new List<GenreViewModel>();
+        [Required(ErrorMessage = "Please choose gender")]
+        public List<GenreViewModel> Genres { get; set; }= new List<GenreViewModel>();
 
     }
 }
