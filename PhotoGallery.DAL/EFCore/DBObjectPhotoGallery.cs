@@ -8,14 +8,17 @@ namespace PhotoGallery.DAL.EFCore
 {
     public class DBObjectPhotoGallery
     {
-        public static void Initial()
+        public static void Initial(GalleryDBContext db)
         {
-            
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                // пересоздадим базу данных
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+            //db.Database.EnsureCreated();
+            //db.Database.EnsureDeleted();
+            //using (GalleryDBContext db = new GalleryDBContext())
+            //{
+            //    // пересоздадим базу данных
+            //    db.Database.EnsureDeleted();
+            //    db.Database.EnsureCreated();
 
                 // создание и добавление моделей
                 PhotoDAL image1 = new PhotoDAL { /*Id = 1,*/ Title= "Bitle1", Author="Author1", Format="jpg", Path="/img/image1.jpg"};
@@ -51,15 +54,15 @@ namespace PhotoGallery.DAL.EFCore
                 genre3.Photos.AddRange(new List<PhotoDAL>() { image9, image10, image11, image12, image13});
                 genre4.Photos.AddRange(new List<PhotoDAL>() { image16, image17, image18});
 
-                AdminDAL admin1 = new AdminDAL { Email = "1213dd@mail.ru", Password = "123" };
-                AdminDAL admin2 = new AdminDAL { Email = "1263dd@tut.by", Password = "12454" };
-                AdminDAL admin3 = new AdminDAL { Email = "12453dd@gmail.com", Password = "12334" };
-                AdminDAL admin4 = new AdminDAL { Email = "1213dd@mail.ru", Password = "1233434" };
-                AdminDAL admin5 = new AdminDAL { Email = "12gfdd@yandex.ru", Password = "1234343" };
-                AdminDAL admin6 = new AdminDAL { Email = "12ggdd@outlook.com", Password = "12343434" };
+                //AdminDAL admin1 = new AdminDAL { Email = "1213dd@mail.ru", Password = "123" };
+                //AdminDAL admin2 = new AdminDAL { Email = "1263dd@tut.by", Password = "12454" };
+                //AdminDAL admin3 = new AdminDAL { Email = "12453dd@gmail.com", Password = "12334" };
+                //AdminDAL admin4 = new AdminDAL { Email = "1213dd@mail.ru", Password = "1233434" };
+                //AdminDAL admin5 = new AdminDAL { Email = "12gfdd@yandex.ru", Password = "1234343" };
+                //AdminDAL admin6 = new AdminDAL { Email = "12ggdd@outlook.com", Password = "12343434" };
 
                 db.SaveChanges();
-            }
+            //}
         }
     }
 }

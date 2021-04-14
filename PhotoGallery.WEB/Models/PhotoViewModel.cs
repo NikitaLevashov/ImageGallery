@@ -14,12 +14,10 @@ namespace PhotoGallery.WEB.Models
         public int Id { get; set; }
 
         [StringLength(15)]
-
         //[Required(ErrorMessage = "Please enter author")]
         public string Title { get; set; }
 
         [StringLength(15)]
-
         [Required(ErrorMessage = "Please enter author")]
         public string Author { get; set; }
         public string Format { get; set; }

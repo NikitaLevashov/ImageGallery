@@ -12,7 +12,7 @@ namespace PhotoGallery.WEB
     {
         public static IEnumerable<PhotoViewModel> MapToIEnumerablePLPhotos(IEnumerable<PhotoBLL> photosDAL)
         {
-            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<PhotoBLL, PhotoViewModel>());
+            var configMapper = new MapperConfiguration(config => config.CreateMap<PhotoBLL, PhotoViewModel>());
             var mapper = new Mapper(configMapper);
 
             var photosViewModel = mapper.Map<IEnumerable<PhotoBLL>, IEnumerable<PhotoViewModel>>(photosDAL);
@@ -22,7 +22,7 @@ namespace PhotoGallery.WEB
 
         public static IEnumerable<GenreViewModel> MapToIEnumerablePLGenres(IEnumerable<GenreBLL> photosBLL)
         {
-            var configMapper = new MapperConfiguration(cfg => cfg.CreateMap<GenreBLL, GenreViewModel>());
+            var configMapper = new MapperConfiguration(config => config.CreateMap<GenreBLL, GenreViewModel>());
             var mapper = new Mapper(configMapper);
 
             var genresViewModel = mapper.Map<IEnumerable<GenreBLL>, IEnumerable<GenreViewModel>>(photosBLL);
@@ -34,12 +34,12 @@ namespace PhotoGallery.WEB
             var photoBL = new PhotoBLL
             {
                 Id = photoPL.Id,
-                Title = photoPL.Title,
-                Path = photoPL.Path,
-                Format = photoPL.Format,
-                Author = photoPL.Author,
-                ImageFile = photoPL.ImageFile,
-                Genres = new List<GenreBLL>(),
+                Title = photoPL?.Title ?? "not installed",
+                Path = photoPL?.Path ?? "not installed",
+                Format = photoPL?.Format ?? "not installed",
+                Author = photoPL?.Author ?? "not installed",
+                ImageFile = photoPL?.ImageFile ?? null,
+                Genres = new List<GenreBLL>()?? throw new NullReferenceException()
             };
 
             return photoBL;

@@ -9,27 +9,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhotoGallery.BLL.intrerfaces;
 using PhotoGallery.BLL.Models;
+using PhotoGallery.BLL.PathService;
 using PhotoGallery.DAL.EFCore;
 using PhotoGallery.DAL.Models;
 using PhotoGallery.WEB.Models;
 
 namespace PhotoGallery.WEB.Controllers
 {
-    
-    //[Route("api/[controller]/[action]")]
+    [Authorize]
     public class ImageController : Controller
     {
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IPhotoService _photoService;
+        private readonly IPhotoCreation _fileSysteam;
 
-        public ImageController(IWebHostEnvironment hostEnvironment, IPhotoService photoService)
+        public ImageController(IWebHostEnvironment hostEnvironment, IPhotoService photoService, IPhotoCreation fyle)
         {
             _photoService=photoService ?? throw new ArgumentNullException("ImageController, PhotoService Error");
             _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException("ImageController, PhotoService Error");
+            _fileSysteam = fyle;
         }
 
-        //[Route("/api/image/getlogin")]
-        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -38,51 +38,30 @@ namespace PhotoGallery.WEB.Controllers
             return View(photos);
         }
 
-        //[Route("getlogin")]
-        //[Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             ViewBag.Genres = _photoService.GetGenres().ToList();
             return View();
         }
-
-        
+                
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PhotoViewModel imageModel, int[] selectedGenres)
         {
             if (ModelState.IsValid)
             {
-                if (selectedGenres != null)
-                {
-                    var genres = /*_context.Genres;*/
-                    MapperProfile.MapToIEnumerablePLGenres(_photoService.GetGenres());
-                    foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
-                    {
-                        imageModel.Genres.Add(c);
-                    }
-                }
-                string wwwRootPath = _hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
-                string extension = Path.GetExtension(imageModel.ImageFile.FileName);
-
-                imageModel.Title = fileName + extension;
-                imageModel.Path = $"/img/{fileName}";
-                imageModel.Format = extension;
-                            
-                string path = Path.Combine(wwwRootPath + "/img/", fileName);
+                var imageCreate = _fileSysteam.CreatePhoto(MapperProfile.MapToBLLPhoto(imageModel), selectedGenres);
+                                           
+                string path = Path.Combine(_hostEnvironment.WebRootPath + "/img/", imageCreate.Title);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
-                    await imageModel.ImageFile.CopyToAsync(fileStream);
+                    await imageCreate.ImageFile.CopyToAsync(fileStream);
                 }
 
-                var imageModelDAL = MapperProfile.MapToBLLPhoto(imageModel);
-
-                _photoService.AddPhoto(imageModelDAL);
-                _photoService.Save();
-
+                _photoService.AddPhoto(imageCreate);
+                
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
@@ -114,8 +93,7 @@ namespace PhotoGallery.WEB.Controllers
                 if (photo != null)
                 {
                     _photoService.Delete(MapperProfile.MapToBLLPhoto(photo));
-                    _photoService.Save();
-                
+                                   
                     return RedirectToAction("Index");
                 }
             }
@@ -153,20 +131,20 @@ namespace PhotoGallery.WEB.Controllers
         {
             if (selectedGenres != null)
             {
-                var genres = /*_context.Genres;*/
-                MapperProfile.MapToIEnumerablePLGenres(_photoService.GetGenres());
+                var genres = MapperProfile.MapToIEnumerablePLGenres(_photoService.GetGenres());
                 foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
                 {
                     photo.Genres.Add(c);
                 }
             }
 
+            var photoUpdate = _photoService.GetPhotos().Where(s => s.Id == photo.Id).FirstOrDefault();
+            photo.Path = photoUpdate.Path;
+            photo.Format = photoUpdate.Format;
             
 
-            
             _photoService.Update(MapperProfile.MapToBLLPhoto(photo));
-            _photoService.Save();
-       
+           
             return RedirectToAction("Index");
         }
     }

@@ -12,13 +12,14 @@ namespace PhotoGallery.BLL.PhotoService
     public class PhotoService : IPhotoService
     {
         IUnitOfWork Database { get; set; }
+
         public PhotoService(IUnitOfWork unitOfWork)
         {
             Database = unitOfWork;
         }
-        public IEnumerable<PhotoBLL> GetPhotosByGenre(string genre)
+        public IEnumerable<PhotoBLL> GetPhotosForEachGenre(string genre)
         {
-            return MapperProfile.MapToIEnumerableBLLPhotos(Database.PhotosByGenre.GetPhotosByGenre(genre));
+            return MapperProfile.MapToIEnumerableBLLPhotos(Database.PhotosByGenre.GetPhotosForEachGenre(genre));
         }
 
         public IEnumerable<PhotoBLL> GetPhotos()
@@ -26,19 +27,14 @@ namespace PhotoGallery.BLL.PhotoService
             return MapperProfile.MapToIEnumerableBLLPhotos(Database.Photos.GetPhotos());
         }
 
-        public IEnumerable<PhotoBLL> GetFiveLastPhotosByGenre()
+        public IEnumerable<PhotoBLL> GetAllFiveLastPhotosByGenre()
         {
-            return MapperProfile.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetFiveLastPhotosByGenre());
+            return MapperProfile.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetAllFiveLastPhotoByGenre());
         }
 
         public IEnumerable<GenreBLL> GetGenres()
         {
             return MapperProfile.MapToIEnumerableBLLGenres(Database.Genres.GetGenres());
-        }
-
-        public void Save()
-        {
-            Database.Save();
         }
 
         public void AddPhoto(PhotoBLL photo)
@@ -55,5 +51,6 @@ namespace PhotoGallery.BLL.PhotoService
         {
             Database.Delete(MapperProfile.MapToDALPhoto(photo));
         }
+
     }
 }

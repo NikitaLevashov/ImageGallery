@@ -12,7 +12,6 @@ namespace PhotoGallery.DAL.interfaces
         IPhotos<PhotoDAL> PhotosByGenre { get; }
         IPhotos<PhotoDAL> FiveLastPhotosByGenre { get; }
         IGenres<GenreDAL> Genres { get; }
-        void Save();
         void AddPhoto(PhotoDAL photo);
         void Update(PhotoDAL photo);
         void Delete(PhotoDAL photo);

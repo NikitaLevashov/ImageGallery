@@ -21,6 +21,10 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using PhotoGallery.BLL.ChatService;
 using Microsoft.AspNetCore.Http.Connections;
+using PhotoGallery.BLL.PathService;
+using PhotoGalleryAuthentication.EFCore;
+using PhotoGalleryAuthentication.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace PhotoGallery.WEB
 {
@@ -37,46 +41,30 @@ namespace PhotoGallery.WEB
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddDbContext<GalleryDBContext>(options =>
-            //  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<GalleryDBContext>(options =>
+                options.UseSqlServer(Configuration["Data:GalleryPhoto:ConnectionStrings"]));
+                       
+            services.AddDbContext<AdminDBContext>(options =>
+              options.UseSqlServer(Configuration["Data:PhotoIdentity:ConnectionStrings"]));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AdminDBContext>();
+            
             services.AddControllersWithViews();
-            services.AddDbContext<GalleryDBContext>();
             services.AddControllers()
                .AddNewtonsoftJson(options =>
                {
                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                });
             services.AddSignalR();
-            services.AddTransient<IPhotoService, PhotoService>();
-            services.AddTransient<IUnitOfWork, UnitOfWorkRepository>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
-                    {
-                        options.RequireHttpsMetadata = false;
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            // укзывает, будет ли валидироваться издатель при валидации токена
-                            ValidateIssuer = true,
-                            // строка, представляющая издателя
-                            ValidIssuer = AuthOptions.ISSUER,
-
-                            // будет ли валидироваться потребитель токена
-                            ValidateAudience = true,
-                            // установка потребителя токена
-                            ValidAudience = AuthOptions.AUDIENCE,
-                            // будет ли валидироваться время существования
-                            ValidateLifetime = true,
-
-                            // установка ключа безопасности
-                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                            // валидация ключа безопасности
-                            ValidateIssuerSigningKey = true,
-                        };
-                    });
+          
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IUnitOfWork, UnitOfWorkRepository>();
+            services.AddScoped<IPhotoCreation,PhotoCreation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -95,15 +83,14 @@ namespace PhotoGallery.WEB
             app.UseAuthentication();
             app.UseAuthorization();
 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                       name: "default",
                       pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<ChatHub>("/chatHub");
+               endpoints.MapHub<ChatHub>("/chatHub");
             });
-
-            DBObjectPhotoGallery.Initial();
+            //IdentitySeedData.EnsurePopulated(app);
+            //DBObjectPhotoGallery.Initial();
     }   }
 }

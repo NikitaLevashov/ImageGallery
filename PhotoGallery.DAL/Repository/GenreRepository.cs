@@ -10,13 +10,17 @@ namespace PhotoGallery.DAL.Repository
 {
     public class GenreRepository : IGenres<GenreDAL>
     {
+        GalleryDBContext _galleryDBContext;
+
+        public GenreRepository(GalleryDBContext galleryDBContext)
+        {
+            _galleryDBContext = galleryDBContext;
+
+        }
         public IEnumerable<GenreDAL> GetGenres()
         {
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                var allGenre = db.Genres.ToList();
-                return allGenre;
-            }
+            var allGenre = _galleryDBContext.Genres.ToList();
+            return allGenre;
         }
     }
 }

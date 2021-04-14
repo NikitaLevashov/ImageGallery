@@ -11,38 +11,37 @@ namespace PhotoGallery.DAL.Repository
 {
     public class PhotoRepository : IPhotos<PhotoDAL> 
     {
+        GalleryDBContext  _galleryDBContext;
+
+        public PhotoRepository(GalleryDBContext galleryDBContext)
+        {
+            _galleryDBContext = galleryDBContext ?? throw new ArgumentNullException("PhotoRepository Error");
+
+        }
+            
         public IEnumerable<PhotoDAL> GetPhotos()
         {
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                var allPhotos = db.Photos.ToList();
-                return allPhotos;
-            }
-
+           var allPhotos = _galleryDBContext.Photos.ToList();
+           return allPhotos;
+           
         }
-        public IEnumerable<PhotoDAL> GetPhotosByGenre(string genre)
+        public IEnumerable<PhotoDAL> GetPhotosForEachGenre(string genre)
         {
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                var genrePhoto = db.Genres.Include(c => c.Photos).Where(p => p.Name == genre).SelectMany(d=>d.Photos);
-                var photos = genrePhoto.ToList();
+            var genrePhoto = _galleryDBContext.Genres.Include(c => c.Photos).Where(p => p.Name == genre).SelectMany(d=>d.Photos);
+            var photos = genrePhoto.ToList();
 
-                return photos;
-            }
+            return photos;
         }
 
-        public IEnumerable<PhotoDAL> GetFiveLastPhotosByGenre()
+        public IEnumerable<PhotoDAL> GetAllFiveLastPhotoByGenre()
         {
             List <PhotoDAL> photosByGenre = null;  
             List <PhotoDAL> photosByAllGenres = new List <PhotoDAL>();
-            
-            using (GalleryDBContext db = new GalleryDBContext())
+
+            foreach (var item in _galleryDBContext.Genres)
             {
-                foreach (var item in db.Genres)
-                {
-                    photosByGenre = GetPhotosByGenre(item.Name).OrderByDescending(p => p.Id).Take(5).ToList();
-                    photosByAllGenres.AddRange(photosByGenre);
-                }
+                photosByGenre = GetPhotosForEachGenre(item.Name).OrderByDescending(p => p.Id).Take(5).ToList();
+                photosByAllGenres.AddRange(photosByGenre);
             }
 
             return photosByAllGenres;
@@ -50,34 +49,22 @@ namespace PhotoGallery.DAL.Repository
 
         public void AddPhoto(PhotoDAL photo)
         {
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                db.Photos.Add(photo);
-            }
-        }
-
-        public void Save(PhotoDAL photo)
-        {
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                db.SaveChanges();
-            }
+            _galleryDBContext.Photos.Add(photo);
+            _galleryDBContext.SaveChanges();
         }
 
         public void Update(PhotoDAL photo)
         {
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                db.Photos.Update(photo);
-            }
+            _galleryDBContext.Photos.Update(photo);
+            _galleryDBContext.SaveChanges();
         }
 
         public void Delete(PhotoDAL photo)
         {
-            using (GalleryDBContext db = new GalleryDBContext())
-            {
-                db.Photos.Remove(photo);
-            }
+            _galleryDBContext.Photos.AsNoTracking();
+            _galleryDBContext.Photos.Remove(photo);
+            _galleryDBContext.SaveChanges();
         }
+
     }
 }

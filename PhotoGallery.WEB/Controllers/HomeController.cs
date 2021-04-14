@@ -14,6 +14,7 @@ namespace PhotoGallery.WEB.Controllers
     public class HomeController : Controller
     {
         private readonly IPhotoService _photoService;
+
         public HomeController(IPhotoService  photoService)
         {
             _photoService = photoService ?? throw new ArgumentNullException("HomeController, PhotoService Error");
@@ -21,7 +22,7 @@ namespace PhotoGallery.WEB.Controllers
 
         public IActionResult Index()
         {
-            var result = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetFiveLastPhotosByGenre());
+            var result = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetAllFiveLastPhotosByGenre());
 
             return View(result);
         }
@@ -46,7 +47,7 @@ namespace PhotoGallery.WEB.Controllers
         {
             List<PhotoViewModel> photoList = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
 
-            var photos = (from photo in photoList
+            var photos =  (from photo in photoList
                           where photo.Title.StartsWith(prefix) 
                           select new
                           {

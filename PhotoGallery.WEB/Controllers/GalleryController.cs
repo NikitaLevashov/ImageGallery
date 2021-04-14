@@ -14,22 +14,15 @@ namespace PhotoGallery.WEB.Controllers
         private readonly IPhotoService _photoService;
         public GalleryController(IPhotoService photoService)
         {
-            _photoService = photoService ?? throw new ArgumentNullException();
+            _photoService = photoService ?? throw new ArgumentNullException("GalleryController, PhotoService Error");
         }
       
         public IActionResult PhotoViewToGenre(string genre)
         {
-            IEnumerable<PhotoViewModel> listPhotoToGenre;
-
-            if (genre != null)
-            {
-                listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotosByGenre(genre).ToList());
-            }
-            else
-            {
-                listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos().ToList());
-            }
-           
+            IEnumerable<PhotoViewModel> listPhotoToGenre = (genre != null) 
+                ? listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotosForEachGenre(genre).ToList())
+                : listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos().ToList());
+                                  
             return View(listPhotoToGenre);
         }
     }

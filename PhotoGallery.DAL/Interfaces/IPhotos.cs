@@ -7,12 +7,10 @@ namespace PhotoGallery.DAL.interfaces
     public interface IPhotos<T> where T: class
     {
         IEnumerable<T> GetPhotos();
-        IEnumerable<T> GetPhotosByGenre(string genre);
-        IEnumerable<T> GetFiveLastPhotosByGenre();
+        IEnumerable<T> GetPhotosForEachGenre(string genre);
+        IEnumerable<T> GetAllFiveLastPhotoByGenre();
         void AddPhoto(T photo);
-        void Save(T photo);
         void Update(T photo);
         void Delete(T photo);
-
     }
 }
