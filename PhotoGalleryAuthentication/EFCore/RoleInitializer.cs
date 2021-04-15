@@ -10,7 +10,7 @@ namespace PhotoGalleryAuthentication.EFCore
     public class RoleInitializer
     {
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
-     {
+  {
             string adminEmail = "admin1@gmail.com";
             string password = "_Aa123456";
            

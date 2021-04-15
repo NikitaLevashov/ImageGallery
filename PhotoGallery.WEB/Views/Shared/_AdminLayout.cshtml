@@ -1,46 +1,48 @@
 ﻿
-@*@{
-    ViewData["Title"] = "_AdminLayout";
-}
-
-<h1>_AdminLayout</h1>*@
-
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
-    <title>@ViewBag.Title</title>
-    <style>
-        .input-validation-error {
-            border-color: red;
-            background-color: #fee;
-        }
-    </style>
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
-    <script src="/lib/jquery-validation/dist/jquery.validate.min.js">
+    <title>@ViewData["Title"] - Photo Gallery</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 
-    </script>
-    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
-
-    </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
-<body class="m-1 р-1">
-    <div class="bg-inf'o р-2 row">
-        <div class="col">
-            <h4>@ViewBag.Title</h4>
-        </div>
-        <div class="col-2">
-            <a class="btn btn-sm btn-primary" asp-action ="Logout" asp-controller="Account">Log Out </a>
-        </div>
+<body>
+    
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Photo Gallery</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                    </ul>
+               </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
 
-    @if (TempData["message"] != null) { 
-        <div class="alert alert-success mt-l">@TempData["message"]</div>
-        }
-    @RenderBody()
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - PhotoGallery - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
 

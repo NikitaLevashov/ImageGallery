@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhotoGalleryAuthentication.Models;
@@ -9,6 +10,7 @@ using PhotoGalleryAuthentication.ViewModels;
 
 namespace PhotoGallery.WEB.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -19,11 +21,15 @@ namespace PhotoGallery.WEB.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
+        [Authorize]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -47,9 +53,9 @@ namespace PhotoGallery.WEB.Controllers
                 }
             }
 
-
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
@@ -66,14 +72,13 @@ namespace PhotoGallery.WEB.Controllers
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    // проверяем, принадлежит ли URL приложению
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Acount");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
@@ -83,14 +88,20 @@ namespace PhotoGallery.WEB.Controllers
             }
             return View(model);
         }
-
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult AdminPage()
+        {
+            return View();
+        }
+
     }
 }

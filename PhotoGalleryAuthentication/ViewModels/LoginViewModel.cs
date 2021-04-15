@@ -15,9 +15,9 @@ namespace PhotoGalleryAuthentication.ViewModels
         [UIHint("password")]
         public string Password { get; set; }
 
-        [Display(Name = "Запомнить?")]
+        [Display(Name = "Remember?")]
         public bool RememberMe { get; set; }
 
-        public string ReturnUrl { get; set; } = "/Image/Index";
+        public string ReturnUrl { get; set; } = "/Account/AdminPage";
     }
 }

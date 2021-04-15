@@ -49,7 +49,10 @@ namespace PhotoGallery.WEB
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AdminDBContext>();
-            
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
+
+
             services.AddControllersWithViews();
             services.AddControllers()
                .AddNewtonsoftJson(options =>

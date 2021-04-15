@@ -27,7 +27,7 @@ namespace PhotoGallery.WEB.Controllers
         {
             _photoService=photoService ?? throw new ArgumentNullException("ImageController, PhotoService Error");
             _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException("ImageController, PhotoService Error");
-            _fileSysteam = fyle;
+            _fileSysteam = fyle ?? throw new ArgumentNullException("ImageController, PhotoService Error");
         }
 
         [HttpGet]

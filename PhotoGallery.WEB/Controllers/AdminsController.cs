@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhotoGalleryAuthentication.Models;
@@ -9,6 +10,7 @@ using PhotoGalleryAuthentication.ViewModels;
 
 namespace PhotoGallery.WEB.Controllers
 {
+    [Authorize]
     public class AdminsController : Controller
     {
         UserManager<User> _userManager;
