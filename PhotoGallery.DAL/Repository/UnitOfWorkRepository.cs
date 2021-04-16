@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PhotoGallery.DAL.EFCore;
 using PhotoGallery.DAL.interfaces;
 using PhotoGallery.DAL.Interfaces;
@@ -16,10 +17,12 @@ namespace PhotoGallery.DAL.Repository
         private GalleryDBContext _database;
         private PhotoRepository _photoRepository;
         private GenreRepository _genreRepository;
+        IConfiguration _configuration;
 
-        public UnitOfWorkRepository(GalleryDBContext database)
+        public UnitOfWorkRepository(GalleryDBContext database, IConfiguration configuration)
         {
             _database = database ?? throw new ArgumentNullException("UnitWorkRepository Error");
+            _configuration = configuration;
         }
         public IPhotos<PhotoDAL> Photos
         {
@@ -88,8 +91,7 @@ namespace PhotoGallery.DAL.Repository
 
         public void Update(PhotoDAL photo)
         {
-            string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=itacademyphotogallerydb;Trusted_Connection=True;MultipleActiveResultSets=true;";
-            using (GalleryDBContext context = new GalleryDBContext(connectionString))
+            using (GalleryDBContext context = new GalleryDBContext(_configuration["Data:GalleryPhoto:ConnectionStrings"]))
             {
                 context.Photos.Update(photo);
                 context.SaveChanges();
@@ -98,8 +100,8 @@ namespace PhotoGallery.DAL.Repository
 
         public void Delete(PhotoDAL photo)
         {
-            string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=itacademyphotogallerydb;Trusted_Connection=True;MultipleActiveResultSets=true;";
-            using (GalleryDBContext context = new GalleryDBContext(connectionString))
+
+            using (GalleryDBContext context = new GalleryDBContext(_configuration["Data:GalleryPhoto:ConnectionStrings"]))
             {
                 context.Photos.Remove(photo);
                 context.SaveChanges();

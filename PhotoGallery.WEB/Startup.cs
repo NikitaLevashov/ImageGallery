@@ -25,6 +25,7 @@ using PhotoGallery.BLL.PathService;
 using PhotoGalleryAuthentication.EFCore;
 using PhotoGalleryAuthentication.Models;
 using Microsoft.AspNetCore.Identity;
+using PhotoGallery.BLL.Intrerfaces;
 
 namespace PhotoGallery.WEB
 {
@@ -40,7 +41,6 @@ namespace PhotoGallery.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<GalleryDBContext>(options =>
                 options.UseSqlServer(Configuration["Data:GalleryPhoto:ConnectionStrings"]));
                        

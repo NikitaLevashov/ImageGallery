@@ -9,17 +9,13 @@ namespace PhotoGallery.DAL.EFCore
 {
     public class GalleryDBContext : DbContext
     {
-        readonly string _connectionString;
+        private readonly string _connectionString;
 
         public DbSet<PhotoDAL> Photos { get; set; }
         public DbSet<GenreDAL> Genres  { get; set; }
-        //public DbSet<AdminDAL> Admins { get; set; }
-        //public GalleryDBContext()
-        //{
-        //}
+       
         public GalleryDBContext(DbContextOptions<GalleryDBContext> options) : base(options)
         {
-
         }
 
         public GalleryDBContext(string connectionString) : base()

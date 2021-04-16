@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotoGallery.BLL.intrerfaces;
+using PhotoGallery.BLL.Filters;
 using PhotoGallery.DAL.interfaces;
 using PhotoGallery.WEB.Models;
 
@@ -20,9 +21,10 @@ namespace PhotoGallery.WEB.Controllers
             _photoService = photoService ?? throw new ArgumentNullException("HomeController, PhotoService Error");
         }
 
-        public IActionResult Index()
-        {
-            var result = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetAllFiveLastPhotosByGenre());
+        [SetNumbersPhotoFilter]
+        public IActionResult Index(int numbersOfPhoto)
+       {
+            var result = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetAllFiveLastPhotosByGenre(numbersOfPhoto));
 
             return View(result);
         }
@@ -37,12 +39,12 @@ namespace PhotoGallery.WEB.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-       
+               
         public IActionResult PhotoSearch()
         {
             return View();
         }
+       
         public JsonResult AutoComplete(string prefix)
         {
             List<PhotoViewModel> photoList = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
@@ -51,28 +53,26 @@ namespace PhotoGallery.WEB.Controllers
                           where photo.Title.StartsWith(prefix) 
                           select new
                           {
-                              image = photo.Path,
-                              label = photo.Title,
                               val = photo.Id
-
                           }).ToList();
 
             return Json(photos);
         }
 
         [HttpPost]
-        public ActionResult PhotoSearch(PhotoViewModel city)
+        public ActionResult PhotoSearch(PhotoViewModel photo)
         {
             List<PhotoViewModel> photoList = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
+
             foreach(var item in photoList)
             {
-                if(city.Title==item.Title)
+                if(photo.Title==item.Title)
                 {
                     ViewBag.Message = item.Path;
                     return View();
                 }
             }
-          
+
             return NotFound();
         }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhotoGallery.BLL.PathService
+namespace PhotoGallery.BLL.Intrerfaces
 {
     public interface IPhotoCreation
     {

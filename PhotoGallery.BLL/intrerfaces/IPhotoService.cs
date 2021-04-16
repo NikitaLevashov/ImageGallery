@@ -9,7 +9,7 @@ namespace PhotoGallery.BLL.intrerfaces
     {
         public IEnumerable<PhotoBLL> GetPhotosForEachGenre(string genre);
         public IEnumerable<PhotoBLL> GetPhotos();
-        public IEnumerable<PhotoBLL> GetAllFiveLastPhotosByGenre();
+        public IEnumerable<PhotoBLL> GetAllFiveLastPhotosByGenre(int numbersPhoto);
         public IEnumerable<GenreBLL> GetGenres();
         void AddPhoto(PhotoBLL photo);
         void Update(PhotoBLL photo);

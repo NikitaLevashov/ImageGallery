@@ -33,12 +33,12 @@ namespace PhotoGallery.DAL.EFCore
                 PhotoDAL image10 = new PhotoDAL { /*Id = 10,*/ Title = "Citle10", Author = "Author10", Format = "jpg", Path = "/img/image10.jpg" };
                 PhotoDAL image11 = new PhotoDAL { /*Id = 11,*/ Title = "Citle11", Author = "Author11", Format = "jpg", Path = "/img/image11.jpg" };
                 PhotoDAL image12 = new PhotoDAL { /*Id = 12,*/ Title = "Title12", Author = "Author12", Format = "jpg", Path = "/img/image12.jpg" };
-                PhotoDAL image13 = new PhotoDAL { /*Id = 13,*/ Title = "Title13", Author = "Author13", Format = "jpg", Path = "/img/image13.jpg" };
-                PhotoDAL image14 = new PhotoDAL { /*Id = 14,*/ Title = "Title14", Author = "Author14", Format = "jpg", Path = "/img/image14.jpg" };
+                PhotoDAL image13 = new PhotoDAL { /*Id = 13,*/ Title = "Titblle13", Author = "Author13", Format = "jpg", Path = "/img/image13.jpg" };
+                PhotoDAL image14 = new PhotoDAL { /*Id = 14,*/ Title = "Titblble14", Author = "Author14", Format = "jpg", Path = "/img/image14.jpg" };
                 PhotoDAL image15 = new PhotoDAL { /*Id = 15,*/ Title = "Title15", Author = "Author15", Format = "jpg", Path = "/img/image15.jpg" };
-                PhotoDAL image16 = new PhotoDAL {/* Id = 16,*/ Title = "Title16", Author = "Author16", Format = "jpg", Path = "/img/image16.jpg" };
-                PhotoDAL image17 = new PhotoDAL { /*Id = 17,*/ Title = "Title17", Author = "Author17", Format = "jpg", Path = "/img/image17.jpg" };
-                PhotoDAL image18 = new PhotoDAL { /*Id = 18,*/ Title = "Title18", Author = "Author18", Format = "jpg", Path = "/img/image18.jpg" };
+                PhotoDAL image16 = new PhotoDAL {/* Id = 16,*/ Title = "Toole16", Author = "Author16", Format = "jpg", Path = "/img/image16.jpg" };
+                PhotoDAL image17 = new PhotoDAL { /*Id = 17,*/ Title = "Tooe17", Author = "Author17", Format = "jpg", Path = "/img/image17.jpg" };
+                PhotoDAL image18 = new PhotoDAL { /*Id = 18,*/ Title = "Toile18", Author = "Author18", Format = "jpg", Path = "/img/image18.jpg" };
 
                 db.Photos.AddRange(image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13, image14, image15, image16, image17, image18);
                 

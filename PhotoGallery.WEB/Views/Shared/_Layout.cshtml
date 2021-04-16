@@ -60,18 +60,16 @@
                             <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
 
                     </ul>
 
                     @using (Html.BeginForm("PhotoSearch", "Home", FormMethod.Post))
-                    {
-
+                     {
                         <input type="text" id="txtCustomer" name="Title" />
                         <input type="submit" id="btnSubmit" value="Submit" />
-
-                    }
+                     }
 
                 </div>
             </div>
@@ -89,7 +87,6 @@
             &copy; 2021 - PhotoGallery - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

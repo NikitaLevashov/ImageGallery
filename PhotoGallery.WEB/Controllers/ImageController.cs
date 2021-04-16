@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,10 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhotoGallery.BLL.intrerfaces;
-using PhotoGallery.BLL.Models;
-using PhotoGallery.BLL.PathService;
-using PhotoGallery.DAL.EFCore;
-using PhotoGallery.DAL.Models;
+using PhotoGallery.BLL.Intrerfaces;
 using PhotoGallery.WEB.Models;
 
 namespace PhotoGallery.WEB.Controllers

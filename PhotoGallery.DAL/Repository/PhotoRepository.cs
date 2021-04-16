@@ -33,14 +33,15 @@ namespace PhotoGallery.DAL.Repository
             return photos;
         }
 
-        public IEnumerable<PhotoDAL> GetAllFiveLastPhotoByGenre()
+        public IEnumerable<PhotoDAL> GetAllFiveLastPhotoByGenre(int numbersPhoto)
         {
+             
             List <PhotoDAL> photosByGenre = null;  
             List <PhotoDAL> photosByAllGenres = new List <PhotoDAL>();
 
             foreach (var item in _galleryDBContext.Genres)
             {
-                photosByGenre = GetPhotosForEachGenre(item.Name).OrderByDescending(p => p.Id).Take(5).ToList();
+                photosByGenre = GetPhotosForEachGenre(item.Name).OrderByDescending(p => p.Id).Take(numbersPhoto).ToList();
                 photosByAllGenres.AddRange(photosByGenre);
             }
 

@@ -1,6 +1,7 @@
 ﻿using PhotoGallery.BLL.intrerfaces;
 using PhotoGallery.BLL.Mapping;
 using PhotoGallery.BLL.Models;
+using PhotoGallery.BLL.Filters;
 using PhotoGallery.DAL.interfaces;
 using PhotoGallery.DAL.Models;
 using System;
@@ -27,9 +28,10 @@ namespace PhotoGallery.BLL.PhotoService
             return MapperProfile.MapToIEnumerableBLLPhotos(Database.Photos.GetPhotos());
         }
 
-        public IEnumerable<PhotoBLL> GetAllFiveLastPhotosByGenre()
+        [SetNumbersPhotoFilter]
+        public IEnumerable<PhotoBLL> GetAllFiveLastPhotosByGenre(int numbersOfPhoto)
         {
-            return MapperProfile.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetAllFiveLastPhotoByGenre());
+            return MapperProfile.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetAllFiveLastPhotoByGenre(numbersOfPhoto));
         }
 
         public IEnumerable<GenreBLL> GetGenres()

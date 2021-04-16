@@ -11,8 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using PhotoGallery.BLL.Mapping;
 using PhotoGallery.BLL.intrerfaces;
-
-
+using PhotoGallery.BLL.Intrerfaces;
 
 namespace PhotoGallery.BLL.PathService
 {
