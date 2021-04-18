@@ -53,7 +53,10 @@ namespace PhotoGallery.WEB.Controllers
                           where photo.Title.StartsWith(prefix) 
                           select new
                           {
+                              image = photo.Path,
+                              label = photo.Title,
                               val = photo.Id
+
                           }).ToList();
 
             return Json(photos);

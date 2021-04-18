@@ -1,6 +1,6 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-body {
+/*body {
     background-color: #1d1d1d !important;
     font-family: "Asap", sans-serif;
     color: #989898;
@@ -57,7 +57,7 @@ img.zoom {
 
 .modal-footer {
     display: none;
-}
+}*/
 
 
 #sidebar_container {
