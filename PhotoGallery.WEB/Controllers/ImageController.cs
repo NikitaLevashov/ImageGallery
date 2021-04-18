@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhotoGallery.BLL.intrerfaces;
 using PhotoGallery.BLL.Intrerfaces;
+using PhotoGallery.DAL.Models;
 using PhotoGallery.WEB.Models;
 
 namespace PhotoGallery.WEB.Controllers
@@ -108,20 +109,23 @@ namespace PhotoGallery.WEB.Controllers
             }
             return NotFound();
         }
+     
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    PhotoDAL photo = new PhotoDAL();
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            ViewBag.Genres = _photoService.GetGenres().ToList();
+        //    ViewBag.Genres = _photoService.GetGenres().ToList();
 
-            if (id != null)
-            {
-                var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
-                var photo = photos.FirstOrDefault(c => c.Id == id);
-                if (photo != null)
-                    return View(photo);
-            }
-            return NotFound();
-        }
+        //    if (id != null)
+        //    {
+        //        var photos = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+        //        var photo = photos.FirstOrDefault(c => c.Id == id);
+        //        if (photo != null)
+        //            return View(photo);
+        //    }
+        //    return NotFound();
+        //}
         [HttpPost]
         public async Task<IActionResult> Edit(PhotoViewModel photo, int[] selectedGenres)
         {
