@@ -24,7 +24,7 @@ namespace PhotoGallery.WEB.Controllers
         [SetNumbersPhotoFilter]
         public IActionResult Index(int numbersOfPhoto)
        {
-            var result = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetAllFiveLastPhotosByGenre(numbersOfPhoto));
+            var result = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetAllFiveLastPhotosByGenre(numbersOfPhoto));
 
             return View(result);
         }
@@ -47,7 +47,7 @@ namespace PhotoGallery.WEB.Controllers
        
         public JsonResult AutoComplete(string prefix)
         {
-            List<PhotoViewModel> photoList = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
+            List<PhotoViewModel> photoList = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
 
             var photos =  (from photo in photoList
                           where photo.Title.StartsWith(prefix) 
@@ -65,7 +65,7 @@ namespace PhotoGallery.WEB.Controllers
         [HttpPost]
         public ActionResult PhotoSearch(PhotoViewModel photo)
         {
-            List<PhotoViewModel> photoList = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
+            List<PhotoViewModel> photoList = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos()).ToList();
 
             foreach(var item in photoList)
             {

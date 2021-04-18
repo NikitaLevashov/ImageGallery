@@ -84,9 +84,14 @@ namespace PhotoGallery.DAL.Repository
         }
 
         public void AddPhoto(PhotoDAL photo)
-        {
-            _database.Photos.Add(photo);
-            _database.SaveChanges();
+        {   
+            using (GalleryDBContext context = new GalleryDBContext(_configuration["Data:GalleryPhoto:ConnectionStrings"]))
+            {
+                context.Photos.Add(photo);
+                context.SaveChanges();
+            }
+            //_database.Photos.Add(photo);
+            //_database.SaveChanges();
         }
 
         public void Update(PhotoDAL photo)
@@ -100,13 +105,11 @@ namespace PhotoGallery.DAL.Repository
 
         public void Delete(PhotoDAL photo)
         {
-
             using (GalleryDBContext context = new GalleryDBContext(_configuration["Data:GalleryPhoto:ConnectionStrings"]))
             {
                 context.Photos.Remove(photo);
                 context.SaveChanges();
             }
-          
         }
 
     }

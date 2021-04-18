@@ -5,22 +5,32 @@
     Layout = "_AdminLayout";
 }
 
-<h2 class="text-center page-header text-danger">Admin Page</h2>
+<style>
+    body {
+        background: #000000; /* Цвет фона */
+        color: #fc0; /* Цвет текста */
+    }
+</style>
+
+<body>
+    <h2 class="text-center page-header text-danger">Admin Page</h2>
 
 
-       <body>
-           <div class="container">
-               <div class="row well col-md-12">
-                   <a class="btn btn-success btn-block" asp-controller="Image" asp-action="Index">Working with photos</a>
-                   <a class="btn btn-success btn-block" asp-controller="Admins" asp-action="Index">Working with admins</a>
-               </div>
-           </div>
-       </body>
+    <body>
+        <div class="container">
+            <div class="row well col-md-12">
+                <a class="btn btn-success btn-block" asp-controller="Image" asp-action="Index">Working with photos</a>
+                <a class="btn btn-success btn-block" asp-controller="Admins" asp-action="Index">Working with admins</a>
+            </div>
+        </div>
+    </body>
 
-       <p></p>
+    <p></p>
 
-       <form method="post" asp-controller="Account" asp-action="Login">
-           <input type="submit" class="btn btn-sm btn-primary" value="Back to Login" />
-       </form>
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <input type="submit" class="btn btn-sm btn-primary" value="Back to Login" />
+    </form>
+</body>
+
 </html>
 

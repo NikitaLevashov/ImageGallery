@@ -13,7 +13,7 @@ namespace PhotoGallery.DAL.EFCore
 
         public DbSet<PhotoDAL> Photos { get; set; }
         public DbSet<GenreDAL> Genres  { get; set; }
-       
+
         public GalleryDBContext(DbContextOptions<GalleryDBContext> options) : base(options)
         {
         }

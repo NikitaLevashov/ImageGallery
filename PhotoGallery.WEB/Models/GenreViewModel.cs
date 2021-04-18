@@ -13,6 +13,10 @@ namespace PhotoGallery.WEB.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<PhotoViewModel> Photos { get; set; } = new List<PhotoViewModel>();
+        public ICollection<PhotoViewModel> Photos { get; set; }
+        public GenreViewModel()
+        {
+            Photos =new List<PhotoViewModel>();
+        }
     }
 }

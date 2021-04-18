@@ -20,8 +20,8 @@ namespace PhotoGallery.WEB.Controllers
         public IActionResult PhotoViewToGenre(string genre)
         {
             IEnumerable<PhotoViewModel> listPhotoToGenre = (genre != null) 
-                ? listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotosForEachGenre(genre).ToList())
-                : listPhotoToGenre = MapperProfile.MapToIEnumerablePLPhotos(_photoService.GetPhotos().ToList());
+                ? listPhotoToGenre = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotosForEachGenre(genre).ToList())
+                : listPhotoToGenre = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos().ToList());
                                   
             return View(listPhotoToGenre);
         }

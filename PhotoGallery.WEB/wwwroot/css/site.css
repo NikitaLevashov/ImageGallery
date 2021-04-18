@@ -58,7 +58,10 @@ img.zoom {
 .modal-footer {
     display: none;
 }*/
-
+#body {
+    background: #000000; /* Цвет фона */
+    color: #fc0; /* Цвет текста */
+}
 
 #sidebar_container {
     

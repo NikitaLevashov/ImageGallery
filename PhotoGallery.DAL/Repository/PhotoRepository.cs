@@ -27,7 +27,7 @@ namespace PhotoGallery.DAL.Repository
         }
         public IEnumerable<PhotoDAL> GetPhotosForEachGenre(string genre)
         {
-            var genrePhoto = _galleryDBContext.Genres.Include(c => c.Photos).Where(p => p.Name == genre).SelectMany(d=>d.Photos);
+            var genrePhoto = _galleryDBContext.Genres.Include(c => c.Photos).Where(p => p.Name == genre).SelectMany(d=>d.Photos).ToList();
             var photos = genrePhoto.ToList();
 
             return photos;

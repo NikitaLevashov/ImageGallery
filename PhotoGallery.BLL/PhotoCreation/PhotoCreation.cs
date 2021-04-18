@@ -39,7 +39,7 @@ namespace PhotoGallery.BLL.PathService
             string extension = Path.GetExtension(imageModelBL.ImageFile.FileName);
 
             //imageModelBL.Title += extension;
-            imageModelBL.Path = $"/img/{fileName}";
+            imageModelBL.Path = $"/img/{imageModelBL.Title}+{extension}";
             imageModelBL.Format = extension;
 
             return imageModelBL;

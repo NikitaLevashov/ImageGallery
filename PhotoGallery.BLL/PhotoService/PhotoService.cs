@@ -20,39 +20,38 @@ namespace PhotoGallery.BLL.PhotoService
         }
         public IEnumerable<PhotoBLL> GetPhotosForEachGenre(string genre)
         {
-            return MapperProfile.MapToIEnumerableBLLPhotos(Database.PhotosByGenre.GetPhotosForEachGenre(genre));
+            return MapperProfilePhoto.MapToIEnumerableBLLPhotos(Database.PhotosByGenre.GetPhotosForEachGenre(genre));
         }
 
         public IEnumerable<PhotoBLL> GetPhotos()
         {
-            return MapperProfile.MapToIEnumerableBLLPhotos(Database.Photos.GetPhotos());
+            return MapperProfilePhoto.MapToIEnumerableBLLPhotos(Database.Photos.GetPhotos());
         }
 
         [SetNumbersPhotoFilter]
         public IEnumerable<PhotoBLL> GetAllFiveLastPhotosByGenre(int numbersOfPhoto)
         {
-            return MapperProfile.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetAllFiveLastPhotoByGenre(numbersOfPhoto));
+            return MapperProfilePhoto.MapToIEnumerableBLLPhotos(Database.FiveLastPhotosByGenre.GetAllFiveLastPhotoByGenre(numbersOfPhoto));
         }
 
         public IEnumerable<GenreBLL> GetGenres()
         {
-            return MapperProfile.MapToIEnumerableBLLGenres(Database.Genres.GetGenres());
+            return MapperProfileGenre.MapToIEnumerableBLLGenres(Database.Genres.GetGenres());
         }
 
         public void AddPhoto(PhotoBLL photo)
         {
-            Database.AddPhoto(MapperProfile.MapToDALPhoto(photo));
+            Database.AddPhoto(MapperProfilePhoto.MapToDALPhoto(photo));
         }
 
         public void Update(PhotoBLL photo)
         {
-            Database.Update(MapperProfile.MapToDALPhoto(photo));
+            Database.Update(MapperProfilePhoto.MapToDALPhoto(photo));
         }
 
         public void Delete(PhotoBLL photo)
         {
-            Database.Delete(MapperProfile.MapToDALPhoto(photo));
+            Database.Delete(MapperProfilePhoto.MapToDALPhoto(photo));
         }
-
     }
 }

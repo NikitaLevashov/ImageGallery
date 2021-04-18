@@ -1,36 +1,34 @@
 ﻿@model List<PhotoGallery.WEB.Models.PhotoViewModel>
-<p></p>
-<div align="center">
-    <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre">All</a>
-    <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Forest">Forest</a>
-    <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Animals">Animals</a>
-    <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Mountains">Mountains</a>
-    <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Space">Space</a>
-</div>
-<br />
-<div class="container body-content">
-    <div class="row gallery-content">
-        @foreach (var photo in Model)
-        {
-            <div class=" gallery-image-container">
-                <div class="gallery-image" style="background-image:url(@photo.Path)"></div>
-            </div>
-        }
+<style>
+    body {
+        background: #000000; /* Цвет фона */
+        color: #fc0; /* Цвет текста */
+    }
+</style>
+
+ <body>
+    <p></p>
+    <div align="center">
+        <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre">All</a>
+        <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Forest">Forest</a>
+        <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Animals">Animals</a>
+        <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Mountains">Mountains</a>
+        <a class="btn btn-default filter-button" asp-controller="Gallery" asp-action="PhotoViewToGenre" asp-route-genre="Space">Space</a>
     </div>
-</div>
-
-<div class="container body-content">
-
-    <div class="row gallery-content">
-        @foreach (var photo in Model)
-        {
-            <div class="gallery-image-container">
-                <div class="gallery-image" style="background-image:url(@photo.Path)"></div>
-            </div>
-        }
+    <br />
+    <div class="container body-content">
+        <div class="row gallery-content">
+            @foreach (var photo in Model)
+            {
+                <div class=" gallery-image-container">
+                    <div class="gallery-image" style="background-image:url(@photo.Path)"></div>
+                </div>
+            }
+        </div>
     </div>
 
-</div>
+</body>
+
 
 
 

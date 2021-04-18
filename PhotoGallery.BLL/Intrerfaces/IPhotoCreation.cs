@@ -9,6 +9,6 @@ namespace PhotoGallery.BLL.Intrerfaces
     public interface IPhotoCreation
     {
         public PhotoBLL CreatePhoto(PhotoBLL imageModelBL, int[] selectedGenres);
-        //public void AddPhotoFileSysteam(PhotoBLL imageModelBL);
+        
     }
 }

@@ -5,8 +5,19 @@
     Layout = "_AdminLayout";
 }
 
-<p></p>
-<body bgcolor="black">
+<style>
+    body {
+        background: #000000; /* Цвет фона */
+        color: #fc0; /* Цвет текста */
+    }
+    td {
+        color: #fc0;
+    }
+
+</style>
+<body>
+    <p></p>
+
     <a asp-action="Create">Create photo</a>
 
     <p></p>
@@ -15,7 +26,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Title</td>
+                <td >@item.Title</td>
                 <td>
                     <a asp-action="Details" asp-controller="Image" asp-route-id="@item.Id">Details"</a> |
                     <a asp-action="Edit" asp-controller="Image" asp-route-id="@item.Id">Edit</a> |
@@ -23,9 +34,12 @@
                 </td>
             </tr>
         }
+
     </table>
     <div>
         <a asp-action="AdminPage" asp-controller="Account">Baco to Admin Page </a>
     </div>
-
 </body>
+
+
+

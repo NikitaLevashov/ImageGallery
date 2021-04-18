@@ -5,7 +5,15 @@
     ViewBag.Title = "Create";
     Layout = "_AdminLayout";
 }
-<h1>Create</h1>
+<style>
+    body {
+        background: #000000; /* Цвет фона */
+        color: #fc0; /* Цвет текста */
+    }
+</style>
+
+<body>
+    <h1>Create</h1>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -46,9 +54,12 @@
     </div>
 </div>
 
-<div>
+  <div>
     <a asp-action="Index">Back to List</a>
-</div>
+  </div>
+
+</body>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

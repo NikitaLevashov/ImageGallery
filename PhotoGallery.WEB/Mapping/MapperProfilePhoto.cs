@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PhotoGallery.BLL.Models;
+using PhotoGallery.WEB.Mapping;
 using PhotoGallery.WEB.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PhotoGallery.WEB
 {
-    public class MapperProfile
+    public class MapperProfilePhoto
     {
         public static IEnumerable<PhotoViewModel> MapToIEnumerablePLPhotos(IEnumerable<PhotoBLL> photosDAL)
         {
@@ -20,15 +21,6 @@ namespace PhotoGallery.WEB
             return photosViewModel;
         }
 
-        public static IEnumerable<GenreViewModel> MapToIEnumerablePLGenres(IEnumerable<GenreBLL> photosBLL)
-        {
-            var configMapper = new MapperConfiguration(config => config.CreateMap<GenreBLL, GenreViewModel>());
-            var mapper = new Mapper(configMapper);
-
-            var genresViewModel = mapper.Map<IEnumerable<GenreBLL>, IEnumerable<GenreViewModel>>(photosBLL);
-
-            return genresViewModel;
-        }
         public static PhotoBLL MapToBLLPhoto(PhotoViewModel photoPL)
         {
             var photoBL = new PhotoBLL
@@ -39,8 +31,9 @@ namespace PhotoGallery.WEB
                 Format = photoPL?.Format ?? "not installed",
                 Author = photoPL?.Author ?? "not installed",
                 ImageFile = photoPL?.ImageFile ?? null,
-                Genres = new List<GenreBLL>()?? throw new NullReferenceException()
             };
+
+            photoBL.Genres.AddRange(MapperProfileGenre.MapToIEnumerableBLGenres(photoPL.Genres));
 
             return photoBL;
         }

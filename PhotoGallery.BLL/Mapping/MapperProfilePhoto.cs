@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PhotoGallery.BLL.Mapping
 {
-    public class MapperProfile
+    public class MapperProfilePhoto
     {
         public static IEnumerable<PhotoBLL> MapToIEnumerableBLLPhotos(IEnumerable<PhotoDAL> photosDAL)
         {
@@ -19,25 +19,6 @@ namespace PhotoGallery.BLL.Mapping
             return photosBLL;
         }
 
-        public static IEnumerable<GenreBLL> MapToIEnumerableBLLGenres(IEnumerable<GenreDAL> photosDAL)
-        {
-            var configMapper = new MapperConfiguration(config => config.CreateMap<GenreDAL, GenreBLL>());
-            var mapper = new Mapper(configMapper);
-
-            var genreModel = mapper.Map<IEnumerable<GenreDAL>, IEnumerable<GenreBLL>>(photosDAL);
-           
-            return genreModel;
-        }
-
-        public static IEnumerable<GenreDAL> MapToIEnumerableDALGenres(IEnumerable<GenreBLL> photosDAL)
-        {
-            var configMapper = new MapperConfiguration(config => config.CreateMap<GenreBLL, GenreDAL>());
-            var mapper = new Mapper(configMapper);
-
-            var genreModel = mapper.Map<IEnumerable<GenreBLL>, IEnumerable<GenreDAL>>(photosDAL);
-
-            return genreModel;
-        }
 
         public static PhotoDAL MapToDALPhoto(PhotoBLL photoBL)
         {
@@ -49,8 +30,9 @@ namespace PhotoGallery.BLL.Mapping
                 Format = photoBL?.Format ?? "not installed",
                 Author = photoBL?.Author ?? "not installed",
                 ImageFile = photoBL?.ImageFile ?? null,
-                Genres = new List<GenreDAL>() ?? throw new NullReferenceException()
             };
+
+            //photoDAL.Genres.AddRange(MapperProfileGenre.MapToIEnumerableDALGenres(photoBL.Genres));
 
             return photoDAL;
         }
