@@ -3,9 +3,20 @@
 <br />
 <br />
 
-<div class="gallery-image-container">
-    <div class="gallery-image" align="center" style="background-image:url(@ViewBag.Message)"></div>
-</div>
+<style>
+    body {
+        background: #000000; /* Цвет фона */
+        color: #fc0; /* Цвет текста */
+    }
+</style>
+<body>
+    @Model.Title
+    <br />
+    <div class="gallery-image-container">
+        <div class="gallery-image" align="center" style="background-image:url(@ViewBag.Message)"></div>
+    </div>
+</body>
+
 
 
 

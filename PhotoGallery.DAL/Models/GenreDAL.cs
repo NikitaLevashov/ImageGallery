@@ -6,6 +6,7 @@ using System.Text;
 
 namespace PhotoGallery.DAL.Models
 {
+
     public class GenreDAL
     {
         [Key]

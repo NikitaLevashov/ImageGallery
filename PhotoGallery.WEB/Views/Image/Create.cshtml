@@ -1,26 +1,26 @@
 ﻿@model PhotoGallery.WEB.Models.PhotoViewModel
-@using PhotoGallery.WEB.Models
 
 @{
     ViewBag.Title = "Create";
     Layout = "_AdminLayout";
 }
-<style>
+@*<style>
     body {
         background: #000000; /* Цвет фона */
         color: #fc0; /* Цвет текста */
     }
-</style>
+</style>*@
 
+<h1>Create</h1>
 <body>
-    <h1>Create</h1>
-<head>
+    
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<hr />
+  </head>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">

@@ -17,13 +17,14 @@ namespace PhotoGallery.DAL.Repository
         private GalleryDBContext _database;
         private PhotoRepository _photoRepository;
         private GenreRepository _genreRepository;
-        IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public UnitOfWorkRepository(GalleryDBContext database, IConfiguration configuration)
         {
             _database = database ?? throw new ArgumentNullException("UnitWorkRepository Error");
             _configuration = configuration;
         }
+
         public IPhotos<PhotoDAL> Photos
         {
             get
@@ -84,14 +85,19 @@ namespace PhotoGallery.DAL.Repository
         }
 
         public void AddPhoto(PhotoDAL photo)
-        {   
-            using (GalleryDBContext context = new GalleryDBContext(_configuration["Data:GalleryPhoto:ConnectionStrings"]))
-            {
-                context.Photos.Add(photo);
-                context.SaveChanges();
-            }
-            //_database.Photos.Add(photo);
-            //_database.SaveChanges();
+        {
+            //using (GalleryDBContext context = new GalleryDBContext(_configuration["Data:GalleryPhoto:ConnectionStrings"]))
+            //{
+            //    context.Photos.AsNoTracking();
+            //    context.Photos.Add(photo);
+            //    context.SaveChanges();
+            //}
+
+            _database.Photos.AsNoTracking();
+            _database.Entry(photo).State = EntityState.Detached;
+            _database.Photos.Add(photo);
+            _database.Photos.AsNoTracking();
+            _database.SaveChanges();
         }
 
         public void Update(PhotoDAL photo)

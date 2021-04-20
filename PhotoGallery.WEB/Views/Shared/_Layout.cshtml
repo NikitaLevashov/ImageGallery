@@ -62,13 +62,19 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-
+                        @for (var t = 0; t < 50; t++)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" asp-area="" asp-controller="" asp-action="">                                                                </a>
+                            </li>
+                        }
+                        
                     </ul>
 
                     @using (Html.BeginForm("PhotoSearch", "Home", FormMethod.Post))
                      {
-                        <input type="text" id="txtCustomer" name="Title" />
-                        <input type="submit" id="btnSubmit" value="Submit" />
+                        <input type="text" id="txtCustomer" placeholder="Search" name="Title" />
+                        <input type="submit" class="btn btn-outline-success" id="btnSubmit" value="Submit" />
                      }
 
                 </div>

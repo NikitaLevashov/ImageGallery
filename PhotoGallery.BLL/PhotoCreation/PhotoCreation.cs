@@ -38,8 +38,8 @@ namespace PhotoGallery.BLL.PathService
             string fileName = Path.GetFileNameWithoutExtension(imageModelBL.ImageFile.FileName);
             string extension = Path.GetExtension(imageModelBL.ImageFile.FileName);
 
-            //imageModelBL.Title += extension;
-            imageModelBL.Path = $"/img/{imageModelBL.Title}+{extension}";
+            imageModelBL.Title = fileName + extension;
+            imageModelBL.Path = $"/img/{fileName+ extension}";
             imageModelBL.Format = extension;
 
             return imageModelBL;

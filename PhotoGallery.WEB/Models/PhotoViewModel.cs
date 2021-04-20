@@ -14,20 +14,22 @@ namespace PhotoGallery.WEB.Models
         public int Id { get; set; }
 
         [StringLength(15)]
-        //[Required(ErrorMessage = "Please enter author")]
+        [Required(ErrorMessage = "Please enter Title")]
         public string Title { get; set; }
 
         [StringLength(15)]
         [Required(ErrorMessage = "Please enter author")]
         public string Author { get; set; }
+
         public string Format { get; set; }
+
         public string Path { get; set; }
 
-       //[Required(ErrorMessage = "Please choose gender")]
+        [Required(ErrorMessage = "Please choose gender")]
         public IFormFile ImageFile { get; set; }
 
         [Required(ErrorMessage = "Please choose gender")]
-        public ICollection<GenreViewModel> Genres { get; set; }= new List<GenreViewModel>();
+        public ICollection<GenreViewModel> Genres { get; set; }
 
     }
 }

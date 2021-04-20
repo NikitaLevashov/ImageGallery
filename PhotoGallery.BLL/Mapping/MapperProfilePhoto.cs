@@ -32,7 +32,7 @@ namespace PhotoGallery.BLL.Mapping
                 ImageFile = photoBL?.ImageFile ?? null,
             };
 
-            //photoDAL.Genres.AddRange(MapperProfileGenre.MapToIEnumerableDALGenres(photoBL.Genres));
+            photoDAL.Genres.AddRange(MapperProfileGenre.MapToIEnumerableDALGenres(photoBL.Genres));
 
             return photoDAL;
         }

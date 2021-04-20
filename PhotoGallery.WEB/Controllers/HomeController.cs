@@ -72,7 +72,7 @@ namespace PhotoGallery.WEB.Controllers
                 if(photo.Title==item.Title)
                 {
                     ViewBag.Message = item.Path;
-                    return View();
+                    return View(photo);
                 }
             }
 
