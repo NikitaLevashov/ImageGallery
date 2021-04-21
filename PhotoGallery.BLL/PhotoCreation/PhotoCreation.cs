@@ -45,17 +45,5 @@ namespace PhotoGallery.BLL.PathService
             return imageModelBL;
         }
 
-        //public void AddPhotoFileSysteam(PhotoBLL imageModelBL)
-        //{
-        //    string wwwRootPath = _hostEnvironment.WebRootPath;
-        //    string fileName = Path.GetFileNameWithoutExtension(imageModelBL.ImageFile.FileName);
-        //    string path = Path.Combine(wwwRootPath + "/img/", fileName);
-
-        //    using (var fileStream = new FileStream(path, FileMode.Create))
-        //    {
-        //        imageModelBL.ImageFile.CopyToAsync(fileStream);
-        //    }
-
-        //}
     }
 }

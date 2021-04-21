@@ -117,6 +117,7 @@ namespace PhotoGallery.DAL.Repository
                 context.Photos.Update(photo);
                 context.SaveChanges();
             }
+
         }
 
         public void Delete(PhotoDAL photo)
@@ -126,12 +127,6 @@ namespace PhotoGallery.DAL.Repository
                 context.Photos.Remove(photo);
                 context.SaveChanges();
             }
-        }
-
-        public PhotoDAL GetPhoto(int? id)
-        {
-            var photo = _database.Photos.FirstOrDefault(c => c.Id == id);
-            return photo;
         }
 
     }

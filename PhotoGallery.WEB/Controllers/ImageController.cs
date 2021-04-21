@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhotoGallery.BLL.intrerfaces;
 using PhotoGallery.BLL.Intrerfaces;
-using PhotoGallery.DAL.Models;
 using PhotoGallery.WEB.Mapping;
 using PhotoGallery.WEB.Models;
 
@@ -68,6 +67,46 @@ namespace PhotoGallery.WEB.Controllers
 
        
         [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            ViewBag.Genres = _photoService.GetGenres();
+
+            if (id != null)
+            {
+                var photos = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
+                var photo = photos.FirstOrDefault(c => c.Id == id);
+                if (photo != null)
+                    return View(photo);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PhotoViewModel photo, int[] selectedGenres)
+        {
+            
+            if (selectedGenres != null)
+            {
+                photo.Genres = new List<GenreViewModel>();
+
+                var genres = MapperProfileGenre.MapToIEnumerablePLGenres(_photoService.GetGenres());
+                foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
+                {
+                    photo.Genres.Add(c);
+                }
+            }
+
+            var photoUpdate = _photoService.GetPhotos().Where(s => s.Id == photo.Id).FirstOrDefault();
+            photo.Path = photoUpdate.Path;
+            photo.Format = photoUpdate.Format;
+
+            _photoService.Update(MapperProfilePhoto.MapToBLLPhoto(photo));
+                    
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
         [ActionName("Delete")]
         public async Task<IActionResult> ConfirmDelete(int? id)
         {
@@ -92,7 +131,7 @@ namespace PhotoGallery.WEB.Controllers
                 if (photo != null)
                 {
                     _photoService.Delete(MapperProfilePhoto.MapToBLLPhoto(photo));
-                                   
+
                     return RedirectToAction("Index");
                 }
             }
@@ -106,49 +145,10 @@ namespace PhotoGallery.WEB.Controllers
                 var photos = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
 
                 var photo = photos.FirstOrDefault(p => p.Id == id);
-                if (photo != null)                                 
-                    return View(photo);
-            }
-            return NotFound();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            ViewBag.Genres = _photoService.GetGenres();
-
-            if (id != null)
-            {
-                var photos = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
-                var photo = photos.FirstOrDefault(c => c.Id == id);
                 if (photo != null)
                     return View(photo);
             }
             return NotFound();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(PhotoViewModel photo, int[] selectedGenres)
-        {
-            if (selectedGenres != null)
-            {
-                photo.Genres = new List<GenreViewModel>();
-
-                var genres = MapperProfileGenre.MapToIEnumerablePLGenres(_photoService.GetGenres());
-                foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
-                {
-                    photo.Genres.Add(c);
-                }
-            }
-
-            var photoUpdate = _photoService.GetPhotos().Where(s => s.Id == photo.Id).FirstOrDefault();
-            photo.Path = photoUpdate.Path;
-            photo.Format = photoUpdate.Format;
-            
-
-            _photoService.Update(MapperProfilePhoto.MapToBLLPhoto(photo));
-           
-            return RedirectToAction("Index");
         }
     }
 }
