@@ -19,7 +19,6 @@ namespace PhotoGallery.BLL.Mapping
             return photosBLL;
         }
 
-
         public static PhotoDAL MapToDALPhoto(PhotoBLL photoBL)
         {
             var photoDAL = new PhotoDAL

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,13 +20,13 @@ namespace PhotoGallery.WEB.Controllers
     {
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IPhotoService _photoService;
-        private readonly IPhotoCreation _fileSysteam;
+        private readonly IPhotoCreation _photoCreation;
 
-        public ImageController(IWebHostEnvironment hostEnvironment, IPhotoService photoService, IPhotoCreation fyle)
+        public ImageController(IWebHostEnvironment hostEnvironment, IPhotoService photoService, IPhotoCreation file)
         {
             _photoService=photoService ?? throw new ArgumentNullException("ImageController, PhotoService Error");
             _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException("ImageController, PhotoService Error");
-            _fileSysteam = fyle ?? throw new ArgumentNullException("ImageController, PhotoService Error");
+            _photoCreation = file ?? throw new ArgumentNullException("ImageController, PhotoService Error");
         }
 
         [HttpGet]
@@ -49,7 +50,7 @@ namespace PhotoGallery.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                var imageCreate = _fileSysteam.CreatePhoto(MapperProfilePhoto.MapToBLLPhoto(imageModel), selectedGenres);
+                var imageCreate = _photoCreation.CreatePhoto(MapperProfilePhoto.MapToBLLPhoto(imageModel), selectedGenres);
                                            
                 string path = Path.Combine(_hostEnvironment.WebRootPath + "/img/", imageCreate.Title);
 
@@ -87,7 +88,7 @@ namespace PhotoGallery.WEB.Controllers
             if (id != null)
             {
                 var photos = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
-                PhotoViewModel photo = photos.FirstOrDefault(p => p.Id == id);
+                var photo = photos.FirstOrDefault(p => p.Id == id);
                 if (photo != null)
                 {
                     _photoService.Delete(MapperProfilePhoto.MapToBLLPhoto(photo));
@@ -105,7 +106,7 @@ namespace PhotoGallery.WEB.Controllers
                 var photos = MapperProfilePhoto.MapToIEnumerablePLPhotos(_photoService.GetPhotos());
 
                 var photo = photos.FirstOrDefault(p => p.Id == id);
-                if (photo != null)
+                if (photo != null)                                 
                     return View(photo);
             }
             return NotFound();
@@ -114,9 +115,7 @@ namespace PhotoGallery.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            //PhotoDAL photo = new PhotoDAL();
-
-            ViewBag.Genres = _photoService.GetGenres().ToList();
+            ViewBag.Genres = _photoService.GetGenres();
 
             if (id != null)
             {
@@ -133,6 +132,8 @@ namespace PhotoGallery.WEB.Controllers
         {
             if (selectedGenres != null)
             {
+                photo.Genres = new List<GenreViewModel>();
+
                 var genres = MapperProfileGenre.MapToIEnumerablePLGenres(_photoService.GetGenres());
                 foreach (var c in genres.Where(genre => selectedGenres.Contains(genre.Id)))
                 {

@@ -15,8 +15,6 @@ namespace PhotoGallery.DAL.interfaces
         void AddPhoto(PhotoDAL photo);
         void Update(PhotoDAL photo);
         void Delete(PhotoDAL photo);
-
-
-
+        
     }
 }

@@ -25,10 +25,8 @@ namespace PhotoGallery.WEB.Models
 
         public string Path { get; set; }
 
-        [Required(ErrorMessage = "Please choose gender")]
         public IFormFile ImageFile { get; set; }
 
-        [Required(ErrorMessage = "Please choose gender")]
         public ICollection<GenreViewModel> Genres { get; set; }
 
     }

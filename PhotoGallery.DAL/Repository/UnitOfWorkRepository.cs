@@ -7,6 +7,7 @@ using PhotoGallery.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Text;
 
 namespace PhotoGallery.DAL.Repository
@@ -86,16 +87,25 @@ namespace PhotoGallery.DAL.Repository
 
         public void AddPhoto(PhotoDAL photo)
         {
-            //using (GalleryDBContext context = new GalleryDBContext(_configuration["Data:GalleryPhoto:ConnectionStrings"]))
-            //{
-            //    context.Photos.AsNoTracking();
-            //    context.Photos.Add(photo);
-            //    context.SaveChanges();
-            //}
+            if(photo!=null)
+            {
+                var photoGenres = photo.Genres;
+                var dataBaseGenres = _database.Genres;
 
-            _database.Photos.AsNoTracking();
-            _database.Entry(photo).State = EntityState.Detached;
-            _database.Photos.Add(photo);
+                photo.Genres = null;
+
+                foreach (var itemDataBase in dataBaseGenres)
+                {
+                    foreach (var itemPhotoGenres in photoGenres)
+                    {
+                        if (itemPhotoGenres.Id == itemDataBase.Id)
+                        {
+                            itemDataBase.Photos.AddRange(new List<PhotoDAL>() { photo });
+                        }
+                    }
+                }
+            }
+           
             _database.Photos.AsNoTracking();
             _database.SaveChanges();
         }
@@ -116,6 +126,12 @@ namespace PhotoGallery.DAL.Repository
                 context.Photos.Remove(photo);
                 context.SaveChanges();
             }
+        }
+
+        public PhotoDAL GetPhoto(int? id)
+        {
+            var photo = _database.Photos.FirstOrDefault(c => c.Id == id);
+            return photo;
         }
 
     }

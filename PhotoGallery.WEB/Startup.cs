@@ -42,7 +42,7 @@ namespace PhotoGallery.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<GalleryDBContext>(options =>
-                options.UseSqlServer(Configuration["Data:GalleryPhoto:ConnectionStrings"]));
+                options.UseSqlServer(Configuration["Data:GalleryPhoto:ConnectionStrings"]), ServiceLifetime.Transient);
                        
             services.AddDbContext<AdminDBContext>(options =>
               options.UseSqlServer(Configuration["Data:PhotoIdentity:ConnectionStrings"]));
@@ -51,7 +51,6 @@ namespace PhotoGallery.WEB
                 .AddEntityFrameworkStores<AdminDBContext>();
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
-
 
             services.AddControllersWithViews();
             services.AddControllers()

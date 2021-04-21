@@ -67,5 +67,10 @@ namespace PhotoGallery.DAL.Repository
             _galleryDBContext.SaveChanges();
         }
 
+        public PhotoDAL GetPhotoById(int? id)
+        {
+            var photo = _galleryDBContext.Photos.FirstOrDefault(c => c.Id == id);
+            return photo;
+        }
     }
 }

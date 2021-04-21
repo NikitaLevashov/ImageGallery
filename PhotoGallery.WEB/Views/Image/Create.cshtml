@@ -4,23 +4,19 @@
     ViewBag.Title = "Create";
     Layout = "_AdminLayout";
 }
-@*<style>
+
+<p></p>
+
+<style>
     body {
         background: #000000; /* Цвет фона */
-        color: #fc0; /* Цвет текста */
+        color: white; /* Цвет текста */
     }
-</style>*@
+</style>
 
-<h1>Create</h1>
 <body>
-    
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-  </head>
-
+<h1>Create</h1>
+ 
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
@@ -43,13 +39,12 @@
             <div class=checkbox checkboxlist col-sm-9">
                 @foreach (var c in ViewBag.Genres)
                 {
-                    <input type="checkbox" name="selectedGenres" value="@c.Id" />@c.Name <br />
+                    <input type="checkbox" name="selectedGenres"  value="@c.Id" />@c.Name <br />
                 }
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </div>
-
         </form>
     </div>
 </div>
